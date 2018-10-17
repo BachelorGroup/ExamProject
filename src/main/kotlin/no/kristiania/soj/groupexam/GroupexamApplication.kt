@@ -7,6 +7,6 @@ import org.springframework.boot.runApplication
 class GroupexamApplication
 
 fun main(args: Array<String>) {
-    println("ur gay lol")
+    println("ur mom and dad together gay lole")
     runApplication<GroupexamApplication>(*args)
 }
