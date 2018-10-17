@@ -4,7 +4,4 @@ Now this is epic!
 
 ## Welcome to our exam project
 
-- Okay
-- This
-- Is
-- Epic!
+[Swagger link](http://localhost:8080/swagger-ui.html) 
