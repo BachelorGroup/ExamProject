@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam;
+package no.kristiania.soj.groupexam.dto;
 
 import io.swagger.annotations.ApiModelProperty
 

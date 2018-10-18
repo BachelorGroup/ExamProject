@@ -1,5 +1,8 @@
 package no.kristiania.soj.groupexam
 
+import no.kristiania.soj.groupexam.util.WrappedResponse.ResponseStatus.ERROR
+import no.kristiania.soj.groupexam.util.WrappedResponse.ResponseStatus.SUCCESS
+
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
 import org.hamcrest.Matchers
@@ -9,8 +12,6 @@ import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.test.context.junit4.SpringRunner
-import no.kristiania.soj.groupexam.WrappedResponse.ResponseStatus.ERROR
-import no.kristiania.soj.groupexam.WrappedResponse.ResponseStatus.SUCCESS
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = [(GroupexamApplication::class)],

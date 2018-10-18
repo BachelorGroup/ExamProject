@@ -1,5 +1,8 @@
 package no.kristiania.soj.groupexam
 
+import no.kristiania.soj.groupexam.util.WrappedResponse
+import no.kristiania.soj.groupexam.dto.TestDto
+
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import org.springframework.validation.annotation.Validated
