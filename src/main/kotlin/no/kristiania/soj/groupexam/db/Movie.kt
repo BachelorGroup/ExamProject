@@ -10,6 +10,7 @@ import javax.validation.constraints.Size
 
 @Entity
 class Movie (
+
         @get:NotBlank
         @get:Size(max = 64)
         var title: String,
