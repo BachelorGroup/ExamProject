@@ -4,8 +4,7 @@ import no.kristiania.soj.groupexam.db.User
 
 object DTOconverter {
 
-
-    fun transform(user: User) : UserDTO{
+    fun transform(user: User): UserDTO {
 
         return UserDTO(
                 username = user.username,
@@ -14,9 +13,7 @@ object DTOconverter {
                 id = user.id.toString()
         )
     }
-
-
-    fun transform(users: Iterable<User>) : List<UserDTO>{
+    fun transform(users: Iterable<User>): List<UserDTO> {
         return users.map { transform(it) }
     }
 }
