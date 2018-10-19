@@ -11,15 +11,15 @@ class MovieDTO(
 
         @ApiModelProperty("Short description of what the movie is about")
         @get:NotNull
-        var descriptionOfMovie: String? = null,
+        var description: String? = null,
 
         @ApiModelProperty("Directors, actors, genre and so on")
         @get:NotNull
-        var infoAboutMovie: String? = null,
+        var info: String? = null,
 
         @ApiModelProperty("Rating of the movie, out of 100")
         @get:NotNull
-        var movieRating: Int? = null,
+        var rating: Int? = null,
 
         @ApiModelProperty("Release date of movie")
         @get:NotNull
