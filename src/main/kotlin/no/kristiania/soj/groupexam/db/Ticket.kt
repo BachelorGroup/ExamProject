@@ -9,32 +9,26 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 @Entity
-class Purchase (
+class Ticket (
+
+        @get:Id
+        @get:GeneratedValue
+        var id: Long? = null,
 
         //Name of the cinema it's playing at
         @get:NotBlank
         @get:Size(max = 64)
-        var cinemaName: String,
-
-        //maybe a map to where it's located?
-        @get:NotBlank
-        @get:Size(max = 256)
-        var geoLocation: String,
+        var cinema: String,
 
         //Where inside the cinema is it playing? Hall 1? Hall 3?
         @get:NotBlank
         @get:Size(max = 64)
-        var cinemaHall: String,
-
+        var hall: String,
 
         @get:NotBlank
-        var seats: Int,
+        var seat: Int,
 
         @get:Max(2200)
         @get:NotNull
-        var price: Int,
-
-        @get:Id
-        @get:GeneratedValue
-        var id: Long? = null
+        var price: Int
 )
