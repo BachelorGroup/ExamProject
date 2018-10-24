@@ -25,6 +25,6 @@ class MovieDTO(
         @get:NotNull
         var releaseDate: String? = null,
 
-        @ApiModelProperty("The id of the movie")
+        @ApiModelProperty("The ticketId of the movie")
         var id: String? = null
 )

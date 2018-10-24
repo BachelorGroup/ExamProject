@@ -1,30 +1,42 @@
 package no.kristiania.soj.groupexam.dto
 
 import io.swagger.annotations.ApiModelProperty
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZonedDateTime
+import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 class TicketDTO (
 
         @ApiModelProperty("Name of the cinema it's playing at, f.ex Colosseum in Oslo, Norway")
-        @get:NotNull
-        var cinemaName: String? =null,
-
-        @ApiModelProperty("Possible map for the user to see where in the world the cinema is")
-        @get:NotNull
-        var geoLocation: String? = null,
+        @get:NotBlank
+        var cinema: String? = null,
 
         @ApiModelProperty("There are several halls in a cinema, this describes which")
         @get:NotNull
-        var cinemaHall: String? = null,
+        var hall: Int? = null,
 
-        @ApiModelProperty("Seats that are taken or avalible")
+        @ApiModelProperty("The row the ticket is assigned to")
         @get:NotNull
-        var seats: Int? = null,
+        var seatRow: Int? = null,
 
-        @ApiModelProperty("Price of a ticket")
+        @ApiModelProperty("The column the ticket is assigned to")
         @get:NotNull
-        var price: Int? = null,
+        var seatColumn: Int? = null,
 
-        @ApiModelProperty("The id of the purchase")
-        var id: String? = null
+        @ApiModelProperty("Name of the movie")
+        @get:NotBlank
+        var movieTitle: String? = null,
+
+        @ApiModelProperty("What time the ticket is for")
+        @get:NotBlank
+        var movieDateTime: LocalDateTime? = null,
+
+        @ApiModelProperty("What time the ticket was purchased")
+        @get:NotBlank
+        var purchaseDateTime: LocalDateTime? = null,
+
+        @ApiModelProperty("The ticketId of the ticket")
+        var ticketId: String? = null
 )
