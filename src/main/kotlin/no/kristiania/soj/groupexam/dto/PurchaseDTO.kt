@@ -3,7 +3,7 @@ package no.kristiania.soj.groupexam.dto
 import io.swagger.annotations.ApiModelProperty
 import javax.validation.constraints.NotNull
 
-class TicketDTO (
+class PurchaseDTO (
 
         @ApiModelProperty("Name of the cinema it's playing at, f.ex Colosseum in Oslo, Norway")
         @get:NotNull

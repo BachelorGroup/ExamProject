@@ -2,7 +2,7 @@ package no.kristiania.soj.groupexam.dto
 
 import no.kristiania.soj.groupexam.db.User
 
-object DTOconverter {
+object UserConverter {
 
     fun transform(user: User): UserDTO {
 
