@@ -13,6 +13,12 @@ interface MovieRepository : CrudRepository<Movie, Long>, MovieRepositoryCustom {
     fun findAllByDirector(director: String): Iterable<Movie>
 
     fun findAllByMovieAndDirector(movie: String, director: String): Iterable<Movie>
+
+    fun findAllByRating(rating: Int): Iterable<Movie>
+
+    fun findAllByDate(date: String): Iterable<Movie>
+
+    fun findAllById(id: Long): Iterable<Movie>
 }
 
 @Transactional

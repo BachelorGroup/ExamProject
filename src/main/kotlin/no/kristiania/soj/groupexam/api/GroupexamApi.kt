@@ -35,13 +35,35 @@ class GroupexamApi {
             movie: String?,
             @ApiParam("The director of the movie")
             @RequestParam("director", required = true)
-            director: String?): ResponseEntity<List<MovieDTO>> {
+            director: String?,
+            @ApiParam("The description of the movie")
+            @RequestParam("description", required = true)
+            description: String?,
+            @ApiParam("The info for the movie, such as actors and genre")
+            @RequestParam("info", required = true)
+            info: String?,
+            @ApiParam("The rating of the movie, in Int form")
+            @RequestParam("rating", required = true)
+            rating: Int?,
+            @ApiParam("The date of the movie, when the movie came out")
+            @RequestParam("releaseDate", required = true)
+            releaseDate: String?,
+            @ApiParam("The id for the movie")
+            @RequestParam("id", required = true)
+            id: Long?
+    ): ResponseEntity<List<MovieDTO>> {
         val list = if (movie.isNullOrBlank() && director.isNullOrBlank()) {
             crud.findAll()
         } else if (!movie.isNullOrBlank() && !director.isNullOrBlank()) {
             crud.findAllByMovieAndDirector(movie!!, director!!)
         } else if (!movie.isNullOrBlank()) {
             crud.findAllByMovie(movie!!)
+        } else if (!releaseDate.isNullOrBlank()) {
+            crud.findAllByDate(releaseDate!!)
+        } else if (!rating.toString().isEmpty()) {
+            crud.findAllByRating(rating!!)
+        } else if (!id.toString().isEmpty()) {
+            crud.findAllById(id!!)
         } else {
             crud.findAllByDirector(director!!)
         }
@@ -57,10 +79,11 @@ class GroupexamApi {
         if (!(dto.id.isNullOrEmpty() && dto.title.isNullOrBlank())) {
             return ResponseEntity.status(400).build()
         }
-        if (dto.releaseDate != null) {
-            return ResponseEntity.status(400).build()
-        }
-        if (dto.director == null || dto.description == null || dto.info == null) {
+        if (dto.director == null ||
+                dto.description == null ||
+                dto.info == null ||
+                dto.rating == null ||
+                dto.releaseDate == null) {
             return ResponseEntity.status(400).build()
         }
         val id: Long?

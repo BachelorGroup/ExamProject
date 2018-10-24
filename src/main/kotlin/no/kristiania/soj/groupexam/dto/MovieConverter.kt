@@ -8,6 +8,7 @@ object MovieConverter {
         return MovieDTO(
                 id = entity.id?.toString(),
                 title = entity.title,
+                director = entity.director,
                 description = entity.description,
                 info = entity.info,
                 rating = entity.rating,

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 @Entity
-class Movie (
+class Movie(
 
         @get:NotBlank
         @get:Size(max = 64)
