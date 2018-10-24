@@ -17,6 +17,6 @@ class UserDTO(
         @get:NotNull
         var email: String? = null,
 
-        @ApiModelProperty("The id of the user")
+        @ApiModelProperty("The ticketId of the user")
         var id: String? = null
 )
