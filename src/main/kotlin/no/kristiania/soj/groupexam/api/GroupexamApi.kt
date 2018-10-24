@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.ConstraintViolationException
 
-const val ID_PARAM = "The numeric id of the news"
+const val ID_PARAM = "The id of the movie"
 const val BASE_JSON = "application/json;charset=UTF-8"
 
 const val MOVIE_JSON = "application/movies+json;charset=utf-8;version=1"
@@ -66,7 +66,7 @@ class GroupexamApi {
         val id: Long?
 
         try {
-            id = crud.addMovie(dto.title!!, dto.director!!, dto.rating!!, dto.description!!, dto.info!!)
+            id = crud.addMovie(dto.title!!, dto.director!!, dto.rating!!, dto.description!!, dto.info!!, dto.releaseDate!!)
         } catch (e: Exception) {
             if (Throwables.getRootCause(e) is ConstraintViolationException) {
                 return ResponseEntity.status(400).build()
