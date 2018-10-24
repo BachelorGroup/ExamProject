@@ -1,9 +1,7 @@
 package no.kristiania.soj.groupexam.db
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
-import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
 @Repository
