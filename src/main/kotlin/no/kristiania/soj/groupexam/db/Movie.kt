@@ -16,6 +16,10 @@ class Movie (
         var title: String,
 
         @get:NotBlank
+        @get:Size(max = 64)
+        var director: String,
+
+        @get:NotBlank
         @get:Size(max = 256)
         var description: String,
 
@@ -26,7 +30,8 @@ class Movie (
         @get:NotBlank
         var rating: Int,
 
-        @get:Max(2200) @get:NotNull
+        @get:Max(2200)
+        @get:NotNull
         var releaseDate: String,
 
         @get:Id

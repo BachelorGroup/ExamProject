@@ -66,7 +66,7 @@ class GroupexamApi {
         val id: Long?
 
         try {
-            id = crud.createMovie(dto.title!!, dto.director!!, dto.rating!!, dto.description!!, dto.info!!)
+            id = crud.addMovie(dto.title!!, dto.director!!, dto.rating!!, dto.description!!, dto.info!!)
         } catch (e: Exception) {
             if (Throwables.getRootCause(e) is ConstraintViolationException) {
                 return ResponseEntity.status(400).build()
