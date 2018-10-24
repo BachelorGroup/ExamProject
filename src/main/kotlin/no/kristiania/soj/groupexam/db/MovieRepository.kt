@@ -10,4 +10,6 @@ interface MovieRepository : CrudRepository<Movie, Long> {
     fun findAllByDirector(director: String): Iterable<Movie>
 
     fun findAllByMovieAndDirector(movie: String, director: String): Iterable<Movie>
+
+    fun createMovie(title: String, director: String, rating: Int, description: String, info: String): Long
 }

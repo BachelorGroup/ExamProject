@@ -13,6 +13,7 @@ object UserConverter {
                 id = user.id.toString()
         )
     }
+
     fun transform(users: Iterable<User>): List<UserDTO> {
         return users.map { transform(it) }
     }

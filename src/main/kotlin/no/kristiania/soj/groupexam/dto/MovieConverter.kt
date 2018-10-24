@@ -14,6 +14,7 @@ object MovieConverter {
                 releaseDate = entity.releaseDate
         ).apply { id = entity.id?.toString() }
     }
+
     fun transform(entities: Iterable<Movie>): List<MovieDTO> {
         return entities.map { transform(it) }
     }
