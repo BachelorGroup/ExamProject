@@ -19,8 +19,5 @@ class UserDTO(
 
         @ApiModelProperty("If user is enabled")
         @get:NotNull
-        var enabled: Boolean = true,
-
-        @ApiModelProperty("The id of the user")
-        var id: String? = null
+        var enabled: Boolean? = null
 )

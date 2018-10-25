@@ -43,13 +43,13 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                     can match the same URLs
                  */
                 .antMatchers("/", "/login", "/signup", "/api/*").permitAll()
-                .antMatchers("/api/ticket/*").authenticated()
+                .antMatchers("/api/ticket/*").permitAll()
                 /*
                     whitelisting: deny everything by default,
                     unless it was explicitly allowed in the rules
                     above.
                  */
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 /*
                     there are many different ways to define
@@ -93,7 +93,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .passwordEncoder(passwordEncoder)
         */
         auth.inMemoryAuthentication()
-                .withUser("foo").password("{noop}123456").roles("USER").and()
-                .withUser("admin").password("{noop}bar").roles("ADMIN", "USER")
+                .withUser("foo").password("bar!123").roles("USER").and()
+                .withUser("admin").password("admin!123").roles("ADMIN", "USER")
     }
 }
