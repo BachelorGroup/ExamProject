@@ -9,14 +9,18 @@ class UserDTO(
         @get:NotNull
         var username: String? =null,
 
-        @ApiModelProperty("password of user")
+        @ApiModelProperty("Password of user")
         @get:NotNull
         var password: String? = null,
 
-        @ApiModelProperty("Email of user")
+        @ApiModelProperty("Role of user")
         @get:NotNull
-        var email: String? = null,
+        var roles: MutableSet<String>? = null,
 
-        @ApiModelProperty("The ticketId of the user")
+        @ApiModelProperty("If user is enabled")
+        @get:NotNull
+        var enabled: Boolean = true,
+
+        @ApiModelProperty("The id of the user")
         var id: String? = null
 )
