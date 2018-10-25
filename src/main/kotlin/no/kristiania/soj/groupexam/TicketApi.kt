@@ -71,7 +71,7 @@ class TicketApi {
 
     @ApiOperation("Get a single ticket specified by id")
     @GetMapping(path = ["/{id}"])
-    fun getNews(@ApiParam("The id of the ticket")
+    fun getTicket(@ApiParam("The id of the ticket")
                 @PathVariable("id")
                 pathId: String?)
             : ResponseEntity<TicketDTO> {

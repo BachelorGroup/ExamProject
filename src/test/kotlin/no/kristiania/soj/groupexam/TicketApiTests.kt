@@ -62,7 +62,7 @@ class TicketApiTests {
     }
 
     @Test
-    fun testCreateAndGetWithNewFormat() {
+    fun testCreateAndGet() {
 
         val cinema = "Colosseum"
         val hall = 1
