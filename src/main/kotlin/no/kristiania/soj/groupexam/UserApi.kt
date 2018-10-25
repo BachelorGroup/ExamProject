@@ -28,7 +28,7 @@ class UserApi {
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_UTF8_VALUE])
     @ApiResponse(code = 201, message = "The username of the created user")
     fun createTicket(
-            @ApiParam("Username and password. Do not specify role or enabled")
+            @ApiParam("Username and password. Do not specify role")
             @RequestBody
             dto: UserDTO
 
@@ -38,7 +38,7 @@ class UserApi {
             return ResponseEntity.status(400).build()
         }
 
-        if (!dto.enabled) {
+        if (!dto.enabled!!) {
             return ResponseEntity.status(400).build()
         }
 
