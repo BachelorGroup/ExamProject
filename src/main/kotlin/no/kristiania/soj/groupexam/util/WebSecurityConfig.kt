@@ -92,8 +92,9 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 )
                 .passwordEncoder(passwordEncoder)
         */
+        //{noop} is just there to say we want the password as plaintext and not encoded
         auth.inMemoryAuthentication()
-                .withUser("foo").password("bar!123").roles("USER").and()
-                .withUser("admin").password("admin!123").roles("ADMIN", "USER")
+                .withUser("foo").password("{noop}bar").roles("USER").and()
+                .withUser("admin").password("{noop}admin").roles("ADMIN", "USER")
     }
 }
