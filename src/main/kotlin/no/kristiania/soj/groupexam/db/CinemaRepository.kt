@@ -16,5 +16,18 @@ interface CinemaRepository : CrudRepository<Ticket, Long>, CinemaRepositoryCusto
 
 @Transactional
 interface CinemaRepositoryCustom {
+    fun addCinema(name: String,
+                  movies: List<Movie>,
+                  halls: String): Long
 
+    fun updateName(id: Long, name: String): Boolean
+
+    fun updateMovies(id: Long, movies: List<Movie>): Boolean
+
+    fun updateHalls(id: Long, halls: String): Boolean
+
+    fun update(id: Long,
+               name: String,
+               movies: List<Movie>,
+               halls: String): Boolean
 }

@@ -15,5 +15,18 @@ interface UserRepository : CrudRepository<User, Long>, UserRepositoryCustom {
 
 @Transactional
 interface UserRepositoryCustom {
+    fun addUser(username: String,
+                password: String,
+                email: String): Long
 
+    fun updateUsername(id: Long, username: String): Boolean
+
+    fun updatePassword(id: Long, password: String): Boolean
+
+    fun updateEmail(id: Long, email: String): Boolean
+
+    fun update(id: Long,
+               username: String,
+               password: String,
+               email: String): Boolean
 }
