@@ -62,6 +62,42 @@ class UserApiTests {
     }
 
     @Test
+    fun testNotFoundUser() {
+
+        RestAssured.given().accept(ContentType.JSON)
+                .get("/notAusername")
+                .then()
+                .statusCode(404)
+                .body("code", CoreMatchers.equalTo(404))
+                .body("message", CoreMatchers.not(CoreMatchers.equalTo(null)))
+    }
+
+    @Test
+    fun testRetrieveEachSingleUser() {
+
+        val users = RestAssured.given().accept(ContentType.JSON)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("data.size()", CoreMatchers.equalTo(3))
+                .extract().body().jsonPath().getList("data", UserDTO::class.java)
+
+        for (u in users) {
+
+            RestAssured.given().accept(ContentType.JSON)
+                    .get("/${u.username}")
+                    .then()
+                    .statusCode(200)
+                    .body("data.username", CoreMatchers.equalTo(u.username))
+                    //remember we need to change to hashed password and
+                    //use matched when we integrate postgres
+                    .body("data.password", CoreMatchers.equalTo(u.password))
+                    .body("data.enabled", CoreMatchers.equalTo(u.enabled))
+                    .body("data.roles[0]", CoreMatchers.equalTo("USER"))
+        }
+    }
+
+    @Test
     fun testCreateAndGet() {
 
         val username = "foop"
@@ -105,5 +141,6 @@ class UserApiTests {
                 //.body("password", CoreMatchers.equalTo(passwordEncoder.matches(password, hashedPassword)))
                 .body("data.password", CoreMatchers.equalTo(password))
                 .body("data.enabled", CoreMatchers.equalTo(true))
+                .body("data.roles[0]", CoreMatchers.equalTo("USER"))
     }
 }
