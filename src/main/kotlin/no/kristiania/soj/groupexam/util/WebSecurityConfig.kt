@@ -41,9 +41,12 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                     these rules are matched one at a time, in their order.
                     this is important to keep in mind if different URL templates
                     can match the same URLs
+
+                    commented out hasrole USER for now so we can access everything from /api/
+                    at a later date we will choose who can access different pages and resources
                  */
-                .antMatchers("/", "/login", "/signup", "index.html", "/api/movie").permitAll()
-                .antMatchers("/api/**").hasRole("USER")
+                .antMatchers("/", "/login", "/signup", "index.html", "/api/movie", "/api/**").permitAll()
+                //.antMatchers("/api/**").hasRole("USER")
                 /*
                     whitelisting: deny everything by default,
                     unless it was explicitly allowed in the rules
