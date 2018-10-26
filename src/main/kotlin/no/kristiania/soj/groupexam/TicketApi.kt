@@ -60,7 +60,7 @@ class TicketApi {
 
     @ApiOperation("Get all tickets")
     @GetMapping
-    fun get(
+    fun getAll(
 
     ): ResponseEntity<List<TicketDTO>> {
 
@@ -71,10 +71,11 @@ class TicketApi {
 
     @ApiOperation("Get a single ticket specified by id")
     @GetMapping(path = ["/{id}"])
-    fun getNews(@ApiParam("The id of the ticket")
+    fun getTicket(@ApiParam("The id of the ticket")
                 @PathVariable("id")
-                pathId: String?)
-            : ResponseEntity<TicketDTO> {
+                pathId: String?
+
+    ): ResponseEntity<TicketDTO> {
 
         val id: Long
         try {
@@ -91,9 +92,86 @@ class TicketApi {
         return ResponseEntity.ok(TicketConverter.transform(dto))
     }
 
+    @ApiOperation("Update an existing ticket")
+    @PutMapping(path = ["/{id}"], consumes = [(MediaType.APPLICATION_JSON_VALUE)])
+    fun updateTicket(
+            @ApiParam("The id of the ticket")
+            @PathVariable("id")
+            pathId: String?,
+            @ApiParam("The ticket that will replace the old one")
+            @RequestBody
+            dto: TicketDTO
+
+    ): ResponseEntity<Any> {
+
+        val dtoId: Long
+        try {
+            dtoId = dto.ticketId!!.toLong()
+        } catch (e: Exception) {
+
+            return ResponseEntity.status(404).build()
+        }
+
+        if (dto.ticketId != pathId) {
+
+            return ResponseEntity.status(409).build()
+        }
+
+        if (!crud.existsById(dtoId)) {
+
+            return ResponseEntity.status(404).build()
+        }
+
+        if (dto.cinema == null || dto.hall == null || dto.seatRow == null || dto.seatColumn == null || dto.movieTitle == null || dto.movieDateTime == null) {
+            return ResponseEntity.status(400).build()
+        }
+
+        try {
+            crud.update(dtoId, dto.cinema!!, dto.hall!!, dto.seatRow!!, dto.seatColumn!!, dto. movieTitle!!, dto.movieDateTime!!)
+        } catch (e: Exception) {
+            if(Throwables.getRootCause(e) is ConstraintViolationException) {
+                return ResponseEntity.status(400).build()
+            }
+            throw e
+        }
+
+        return ResponseEntity.status(204).build()
+    }
+
+    @ApiOperation("Update the seat")
+    @PatchMapping(path = ["/{id}/seat"], consumes = [(MediaType.APPLICATION_JSON_UTF8_VALUE)])
+    fun updateSeat(
+            @ApiParam("The id of the ticket")
+            @PathVariable("id")
+            id: Long?,
+            @ApiParam("The new row") seatRow: Int,
+            @ApiParam("The new seat") seatColumn: Int
+
+    ): ResponseEntity<Any> {
+
+        if (id == null) {
+            return ResponseEntity.status(400).build()
+        }
+
+        if (!crud.existsById(id)) {
+            return ResponseEntity.status(404).build()
+        }
+
+        try {
+            crud.updateSeat(id, seatRow, seatColumn)
+        } catch (e: Exception) {
+            if(Throwables.getRootCause(e) is ConstraintViolationException) {
+                return ResponseEntity.status(400).build()
+            }
+            throw e
+        }
+
+        return ResponseEntity.status(204).build()
+    }
+
     @ApiOperation("Delete a ticket with the given id")
     @DeleteMapping(path = ["/{id}"])
-    fun delete(@ApiParam("The id of the ticket")
+    fun deleteTicket(@ApiParam("The id of the ticket")
                @PathVariable("id")
                pathId: String?): ResponseEntity<Any> {
 
