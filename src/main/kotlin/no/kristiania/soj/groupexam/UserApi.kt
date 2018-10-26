@@ -71,7 +71,7 @@ class UserApi {
 
     @ApiOperation("Get a single user specified by username")
     @GetMapping(path = ["/{username}"])
-    fun getNews(@ApiParam("The username of the user")
+    fun getUser(@ApiParam("The username of the user")
                 @PathVariable("username")
                 pathId: String?)
             : ResponseEntity<UserDTO> {
