@@ -37,11 +37,6 @@ class UserApi {
 
     ): ResponseEntity<WrappedResponse<Void>> {
 
-        if (!(dto.roles!!.isEmpty())) {
-            //for now all users created has the role 'USER'
-            return RestResponseFactory.userFailure("Cannot specify role when creating a user")
-        }
-
         if (!dto.enabled!!) {
             return RestResponseFactory.userFailure("User has to be enabled")
         }
@@ -63,7 +58,7 @@ class UserApi {
     }
 
     @ApiOperation("Get all users")
-    @GetMapping(path = ["/"])
+    @GetMapping
     fun getAll(
 
     ): ResponseEntity<WrappedResponse<List<UserDTO>>> {
