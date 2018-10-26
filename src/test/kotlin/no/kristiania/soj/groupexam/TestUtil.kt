@@ -6,12 +6,12 @@ import org.springframework.stereotype.Service
 @Service
 class TestUtil{
 
-    fun initializeTest(port: Int, basePath: String) {
+    fun initializeTest(port: Int, path: String) {
 
         // RestAssured configs shared by all the tests
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = port
-        RestAssured.basePath = basePath
+        RestAssured.basePath = path
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
     }
 }
