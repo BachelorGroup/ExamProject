@@ -1,5 +1,6 @@
 package no.kristiania.soj.groupexam
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
 import no.kristiania.soj.groupexam.dto.TicketDTO
@@ -13,6 +14,7 @@ import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import java.time.*
+import java.time.format.DateTimeFormatter
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = [(GroupexamApplication::class)],
@@ -69,7 +71,8 @@ class TicketApiTests {
         val seatRow = 5
         val seatColumn = 7
         val movieTitle = "Monsters INC"
-        val movieDateTime = LocalDateTime.of(2018, Month.OCTOBER, 24, 18, 2, 0)
+        val movieDateTime = LocalDateTime.of(2018, Month.OCTOBER, 24, 18, 2)
+        val expectedTime = movieDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 
         val dto = TicketDTO(cinema, hall, seatRow, seatColumn, movieTitle, movieDateTime)
 
@@ -105,11 +108,12 @@ class TicketApiTests {
                 .body("cinema", CoreMatchers.equalTo(cinema))
                 .body("seatRow", CoreMatchers.equalTo(seatRow))
                 .body("seatColumn", CoreMatchers.equalTo(seatColumn))
-                .body("movieTitle", CoreMatchers.equalTo(movieTitle)) //TODO: Actually be able to check movieDateTime properly (Database reformatting the value)
+                .body("movieTitle", CoreMatchers.equalTo(movieTitle))
+                .body("movieDateTime", CoreMatchers.equalTo(expectedTime)).extract().response().asString()
     }
 
     @Test
-    fun updateTicket() {
+    fun testUpdateTicket() {
 
         val cinema = "Colosseum"
         val hall = 1
@@ -132,7 +136,8 @@ class TicketApiTests {
 
         RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .pathParam("ticketId", id)
-                .body(TicketDTO(cinema, hall, seatRow, seatColumn, updatedMovieTitle, movieDateTime, null, id)) //TODO: Make it so that we don't need a null value
+                .body(TicketDTO(
+                        cinema = cinema, hall = hall, seatRow = seatRow, seatColumn = seatColumn, movieTitle = updatedMovieTitle, movieDateTime = movieDateTime, ticketId =  id)) //TODO: Make it so that we don't need a null value
                 .put("/{ticketId}")
                 .then()
                 .statusCode(204) // instead of 204
