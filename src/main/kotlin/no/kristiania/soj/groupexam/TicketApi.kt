@@ -138,6 +138,37 @@ class TicketApi {
         return ResponseEntity.status(204).build()
     }
 
+    @ApiOperation("Update the seat")
+    @PatchMapping(path = ["/{id}/seat"], consumes = [(MediaType.APPLICATION_JSON_UTF8_VALUE)])
+    fun updateSeat(
+            @ApiParam("The id of the ticket")
+            @PathVariable("id")
+            id: Long?,
+            @ApiParam("The new row") seatRow: Int,
+            @ApiParam("The new seat") seatColumn: Int
+
+    ): ResponseEntity<Any> {
+
+        if (id == null) {
+            return ResponseEntity.status(400).build()
+        }
+
+        if (!crud.existsById(id)) {
+            return ResponseEntity.status(404).build()
+        }
+
+        try {
+            crud.updateSeat(id, seatRow, seatColumn)
+        } catch (e: Exception) {
+            if(Throwables.getRootCause(e) is ConstraintViolationException) {
+                return ResponseEntity.status(400).build()
+            }
+            throw e
+        }
+
+        return ResponseEntity.status(204).build()
+    }
+
     @ApiOperation("Delete a ticket with the given id")
     @DeleteMapping(path = ["/{id}"])
     fun deleteTicket(@ApiParam("The id of the ticket")

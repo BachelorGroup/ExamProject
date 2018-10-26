@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.ZonedDateTime
 import javax.persistence.EntityManager
 
 @Repository
@@ -19,6 +17,8 @@ interface TicketRepositoryCustom {
     fun createTicket(cinema: String, hall: Int, seatRow: Int, seatColumn: Int, movieTitle: String, movieDateTime: LocalDateTime): Long
 
     fun update(ticketId: Long, cinema: String, hall: Int, seatRow: Int, seatColumn: Int, movieTitle: String, movieDateTime: LocalDateTime): Boolean
+
+    fun updateSeat(ticketId: Long, seatRow: Int, seatColumn: Int) : Boolean
 }
 
 @Repository
@@ -47,6 +47,17 @@ class TicketRepositoryImpl : TicketRepositoryCustom {
         ticket.seatColumn = seatColumn
         ticket.movieTitle = movieTitle
         ticket.movieDateTime = movieDateTime
+
+        return true
+    }
+
+    override fun updateSeat(ticketId: Long, seatRow: Int, seatColumn: Int)
+            : Boolean {
+
+        val ticket = em.find(TicketEntity::class.java, ticketId) ?: return false
+
+        ticket.seatRow = seatRow
+        ticket.seatColumn = seatColumn
 
         return true
     }
