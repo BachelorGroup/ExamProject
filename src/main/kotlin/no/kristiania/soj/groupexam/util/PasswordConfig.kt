@@ -7,9 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 class PasswordConfig {
-
+    /*
+        commented out for now until we setup postgres
+      */
+/*
     @Bean
     fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
-    }
+    }*/
 }

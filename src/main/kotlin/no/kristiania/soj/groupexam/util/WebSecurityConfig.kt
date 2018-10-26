@@ -42,14 +42,14 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                     this is important to keep in mind if different URL templates
                     can match the same URLs
                  */
-                .antMatchers("/", "/login", "/signup", "/api/*").permitAll()
-                .antMatchers("/api/ticket/*").permitAll()
+                .antMatchers("/", "/login", "/signup", "index.html", "/api/movie").permitAll()
+                .antMatchers("/api/**").hasRole("USER")
                 /*
                     whitelisting: deny everything by default,
                     unless it was explicitly allowed in the rules
                     above.
                  */
-                .anyRequest().permitAll()
+                .anyRequest().hasRole("ADMIN")
                 .and()
                 /*
                     there are many different ways to define
@@ -94,7 +94,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         */
         //{noop} is just there to say we want the password as plaintext and not encoded
         auth.inMemoryAuthentication()
-                .withUser("foo").password("{noop}bar").roles("USER").and()
+                .withUser("foo").password("{noop}bar123").roles("USER").and()
                 .withUser("admin").password("{noop}admin").roles("ADMIN", "USER")
     }
 }
