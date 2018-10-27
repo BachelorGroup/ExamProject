@@ -1,9 +1,6 @@
 package no.kristiania.soj.groupexam.db
 
-import javax.persistence.ElementCollection
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 import javax.validation.constraints.Max
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
@@ -21,8 +18,18 @@ class UserEntity(
         @get:Size(max = 32)
         var password: String,
 
-        @get:ElementCollection
+        @get:ElementCollection(fetch = FetchType.EAGER)
         var roles: MutableSet<String>,
 
         var enabled: Boolean
+
+        /*
+            OneToOne relationship that assumes the Id of the source and target are the same
+            In this case the Id refers to the username of the user
+
+            We want to load the details of the user EAGERly
+        *//*
+        @get:OneToOne(fetch = FetchType.EAGER)
+        @get:MapsId
+        var details: UserDetailsEntity*/
 )

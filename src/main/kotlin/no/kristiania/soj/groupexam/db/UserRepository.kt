@@ -16,6 +16,7 @@ interface UserRepository : CrudRepository<UserEntity, String>, UserRepositoryCus
 interface UserRepositoryCustom {
 
     fun createUser(username: String, password: String): Boolean
+    fun createAdmin(username: String, password: String): Boolean
 }
 
 @Repository
@@ -31,9 +32,27 @@ class UserRepositoryImpl : UserRepositoryCustom {
     override fun createUser(username: String, password: String)
             : Boolean {
 
+        if (em.find(UserEntity::class.java, username) != null) {
+            //if we find a user with the existing username already, return false
+            return false
+        }
         //need to use hashed password instead of password when we add postgres
         //val hashedPassword = passwordEncoder.encode(password)
         val user = UserEntity(username, password, Collections.singleton("USER"), true)
+        em.persist(user)
+        return true
+    }
+
+    override fun createAdmin(username: String, password: String)
+            : Boolean {
+
+        if (em.find(UserEntity::class.java, username) != null) {
+            //if we find a user with the existing username already, return false
+            return false
+        }
+        //need to use hashed password instead of password when we add postgres
+        //val hashedPassword = passwordEncoder.encode(password)
+        val user = UserEntity(username, password, Collections.singleton("ADMIN"), true)
         em.persist(user)
         return true
     }

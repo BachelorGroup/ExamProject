@@ -12,6 +12,7 @@ class UserConverter{
                     password = userEntity.password,
                     roles = userEntity.roles,
                     enabled = userEntity.enabled
+                    //details = userEntity.details
             )
         }
         fun transform(users: Iterable<UserEntity>): List<UserDTO> {
