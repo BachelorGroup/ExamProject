@@ -45,8 +45,12 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                     commented out hasrole USER for now so we can access everything from /api/
                     at a later date we will choose who can access different pages and resources
                  */
-                .antMatchers("/", "/login", "/signup", "index.html", "/api/movie", "/api/**").permitAll()
-                //.antMatchers("/api/**").hasRole("USER")
+                .antMatchers("/", "/login", "/signup",
+                        "/index.html", "/api/movie", "/api/movie/**",
+                        "/api/ticket", "/api/ticket/**", "/api/users",
+                        "/api/users/**", "/api/test").permitAll()
+                .antMatchers("/api/testUser").hasRole("USER")
+                .antMatchers("/api/testAdmin").hasRole("ADMIN")
                 /*
                     whitelisting: deny everything by default,
                     unless it was explicitly allowed in the rules

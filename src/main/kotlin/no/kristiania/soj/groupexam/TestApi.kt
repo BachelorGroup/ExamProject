@@ -45,4 +45,16 @@ class TestApi {
             )
         }
     }
+
+    @GetMapping(produces = [(MediaType.TEXT_PLAIN_VALUE)],
+            path = ["/testUser"])
+    fun forUsers() : String{
+        return "User auth or higher can access"
+    }
+
+    @GetMapping(produces = [(MediaType.TEXT_PLAIN_VALUE)],
+            path = ["/testAdmin"])
+    fun forAdmins() : String{
+        return "Admin only can access"
+    }
 }

@@ -143,4 +143,80 @@ class UserApiTests {
                 .body("data.enabled", CoreMatchers.equalTo(true))
                 .body("data.roles[0]", CoreMatchers.equalTo("USER"))
     }
+
+    @Test
+    fun testDeleteAllUsers() {
+
+        val users = RestAssured.given().accept(ContentType.JSON)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("data.size()", CoreMatchers.equalTo(3))
+                .extract().body().jsonPath().getList("data", UserDTO::class.java)
+
+        for (u in users) {
+
+            RestAssured.given().accept(ContentType.JSON)
+                    .delete("/${u.username}")
+                    .then()
+                    .statusCode(204)
+        }
+
+        RestAssured.given().accept(ContentType.JSON)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("data.size()", CoreMatchers.equalTo(0))
+    }
+
+    @Test
+    fun testNotAuthenticated() {
+
+        testUtil.initializeTest(port, "/api")
+
+        RestAssured.given().get("/testUser")
+                .then()
+                .statusCode(401)
+                .header("WWW-Authenticate", CoreMatchers.containsString("Basic realm=\"Realm\""))
+    }
+
+    @Test
+    fun testNotAuthorizedUser() {
+
+        testUtil.initializeTest(port, "/api")
+
+        RestAssured.given()
+                .auth().basic("foo", "bar123")
+                .get("/testAdmin")
+                .then()
+                .statusCode(403)
+    }
+
+    @Test
+    fun testAuthorizedUser() {
+
+        testUtil.initializeTest(port, "/api")
+
+        //as we are currently just using the in memory auth from httpbasic
+        //we have to use one of those 'users' and not the ones created in this test
+        RestAssured.given()
+                .auth().basic("foo", "bar123")
+                .get("/testUser")
+                .then()
+                .statusCode(200)
+    }
+
+    @Test
+    fun testAuthenticatedAdmin() {
+
+        testUtil.initializeTest(port, "/api")
+
+        //as we are currently just using the in memory auth from httpbasic
+        //we have to use one of those 'users' and not the ones created in this test
+        RestAssured.given()
+                .auth().basic("admin", "admin")
+                .get("/testAdmin")
+                .then()
+                .statusCode(200)
+    }
 }

@@ -127,6 +127,7 @@ class UserApi {
                 "The requested user with username '$pathId' is not in the database. " +
                         "This PUT operation will not create it.")
 
+        //remember to hash the password when postgres is implemented
         entity.password = dto.password!!
 
         userCrud.save(entity)
