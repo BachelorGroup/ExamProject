@@ -21,11 +21,22 @@ interface MovieRepository : CrudRepository<Movie, Long>, MovieRepositoryCustom {
 
 @Transactional
 interface MovieRepositoryCustom {
-    fun addMovie(title: String, director: String, rating: Int, description: String, info: String, releaseDate: String): Long
+    fun addMovie(title: String,
+                 director: String,
+                 rating: Int,
+                 description: String,
+                 info: String,
+                 releaseDate: String): Long
 
     fun updateInfo(id: Long, info: String): Boolean
 
-    fun update(id: Long, title: String, director: String, rating: Int, description: String, info: String, releaseDate: String): Boolean
+    fun update(id: Long,
+               title: String,
+               director: String,
+               rating: Int,
+               description: String,
+               info: String,
+               releaseDate: String): Boolean
 }
 
 //@Repository

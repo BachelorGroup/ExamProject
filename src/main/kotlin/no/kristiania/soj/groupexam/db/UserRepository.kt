@@ -1,34 +1,32 @@
 package no.kristiania.soj.groupexam.db
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
-import org.springframework.transaction.annotation.Transactional
-import java.util.*
-import javax.persistence.EntityManager
+import javax.transaction.Transactional
 
 @Repository
-interface UserRepository : CrudRepository<UserEntity, String>, UserRepositoryCustom {
+interface UserRepository : CrudRepository<User, Long>, UserRepositoryCustom {
+    fun findAllByUser(user: String): Iterable<User>
+
+    fun findAllByEmail(email: String): Iterable<User>
+
+    fun findAllById(id: Long) : Iterable<User>
 }
 
 @Transactional
 interface UserRepositoryCustom {
+    fun addUser(username: String,
+                password: String,
+                email: String): Long
 
-    fun createUser(username: String, password: String): Boolean
-}
+    fun updateUsername(id: Long, username: String): Boolean
 
-@Repository
-@Transactional
-class UserRepositoryImpl : UserRepositoryCustom {
+    fun updatePassword(id: Long, password: String): Boolean
 
-    @Autowired
-    private lateinit var em: EntityManager
+    fun updateEmail(id: Long, email: String): Boolean
 
-    override fun createUser(username: String, password: String)
-            : Boolean {
-
-        val user = UserEntity(username, password, Collections.singleton("USER"), true)
-        em.persist(user)
-        return true
-    }
+    fun update(id: Long,
+               username: String,
+               password: String,
+               email: String): Boolean
 }
