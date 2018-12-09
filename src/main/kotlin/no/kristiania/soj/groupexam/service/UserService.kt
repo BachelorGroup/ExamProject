@@ -39,4 +39,9 @@ class UserService(val entityManager: EntityManager) {
 
         return query.singleResult
     }
+    fun getUserByEmail(email: String?): User {
+        val query: TypedQuery<User> = entityManager.createQuery("select u from User u where u.email=?1", User::class.java)
+        query.setParameter(1, email)
+        return query.singleResult
+    }
 }

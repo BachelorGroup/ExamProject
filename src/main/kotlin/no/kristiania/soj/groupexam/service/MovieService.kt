@@ -50,7 +50,26 @@ class MovieService(val entityManager: EntityManager) {
             query = entityManager.createQuery("select m from Movie m where m.director=?1", Movie::class.java)
             query.setParameter(1, director)
         }
-        val result = query.resultList
-        return result
+        return query.resultList
+    }
+    fun getMoviesByRating(rating: Int): List<Movie> {
+        val query: TypedQuery<Movie>
+        if(rating == null){
+            query = entityManager.createQuery("select m from Movie m", Movie::class.java)
+        } else {
+            query = entityManager.createQuery("select m from Movie m where m.rating=?1", Movie::class.java)
+            query.setParameter(1, rating)
+        }
+        return query.resultList
+    }
+    fun getMoviesByDate(releaseDate: String): List<Movie> {
+        val query: TypedQuery<Movie>
+        if(releaseDate == null) {
+            query = entityManager.createQuery("select m from Movie m", Movie::class.java)
+        }else {
+            query = entityManager.createQuery("select m from Movie m where m.releaseDate=?1", Movie::class.java)
+            query.setParameter(1, releaseDate)
+        }
+        return query.resultList
     }
 }
