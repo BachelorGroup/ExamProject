@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>ticket</module>
+		<module>movie</module>
 	</modules>
 
 	<properties>

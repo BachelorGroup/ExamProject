@@ -1,13 +1,10 @@
-package no.kristiania.soj.groupexam.api
+package no.kristiania.soj.groupexam.movie.api
 
 import com.google.common.base.Throwables
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
-import no.kristiania.soj.groupexam.db.MovieRepository
-import no.kristiania.soj.groupexam.dto.MovieConverter
-import no.kristiania.soj.groupexam.dto.MovieDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
