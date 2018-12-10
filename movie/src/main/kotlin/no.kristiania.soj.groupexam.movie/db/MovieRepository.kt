@@ -1,4 +1,4 @@
-package no.kristiania.soj.movie.db
+package no.kristiania.soj.groupexam.movie.db
 
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository

@@ -1,4 +1,4 @@
-package no.kristiania.soj.movie.db
+package no.kristiania.soj.groupexam.movie.db
 
 import org.junit.After
 import org.junit.Before

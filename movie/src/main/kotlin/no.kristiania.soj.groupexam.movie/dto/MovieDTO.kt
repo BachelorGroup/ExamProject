@@ -1,4 +1,4 @@
-package no.kristiania.soj.movie.dto
+package no.kristiania.soj.groupexam.movie.dto
 
 import io.swagger.annotations.ApiModelProperty
 import javax.validation.constraints.NotNull

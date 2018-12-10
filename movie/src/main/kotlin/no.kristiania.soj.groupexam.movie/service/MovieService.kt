@@ -1,6 +1,6 @@
-package no.kristiania.soj.movie.service
+package no.kristiania.soj.groupexam.movie.service
 
-import no.kristiania.soj.movie.db.Movie
+import no.kristiania.soj.groupexam.movie.db.Movie
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
 import javax.persistence.TypedQuery

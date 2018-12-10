@@ -1,4 +1,4 @@
-package no.kristiania.soj.movie.db
+package no.kristiania.soj.groupexam.movie.db
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
