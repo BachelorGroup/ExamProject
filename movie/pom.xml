@@ -16,12 +16,4 @@
         <artifactId>groupexam</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
-    <dependencies>
-        <dependency>
-            <groupId>no.kristiania.soj</groupId>
-            <artifactId>groupexam</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 </project>
