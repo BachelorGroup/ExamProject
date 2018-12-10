@@ -6,7 +6,7 @@
 	<groupId>no.kristiania.soj</groupId>
 	<artifactId>groupexam</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<name>groupexam</name>
 	<description>Group exam project in PG6100</description>
@@ -34,11 +34,11 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dependencies</artifactId>
-			<version>${version.springcloud}</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.cloud</groupId>-->
+			<!--<artifactId>spring-cloud-dependencies</artifactId>-->
+			<!--<version>${version.springcloud}</version>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -176,6 +176,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>

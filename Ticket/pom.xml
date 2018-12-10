@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>groupexam</name>
+	<name>ticket</name>
 	<description>Group exam project in PG6100</description>
 
 	<parent>
