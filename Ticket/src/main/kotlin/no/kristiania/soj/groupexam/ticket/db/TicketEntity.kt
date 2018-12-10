@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.db
+package no.kristiania.soj.groupexam.ticket.db
 
 import java.time.LocalDate
 import java.time.LocalDateTime
