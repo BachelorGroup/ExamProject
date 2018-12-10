@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.db
+package no.kristiania.soj.groupexam.ticket.db
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository

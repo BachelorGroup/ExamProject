@@ -1,12 +1,12 @@
-package no.kristiania.soj.groupexam
+package no.kristiania.soj.groupexam.ticket
 
 import com.google.common.base.Throwables
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
-import no.kristiania.soj.groupexam.dto.TicketDTO
-import no.kristiania.soj.groupexam.db.TicketRepository
-import no.kristiania.soj.groupexam.dto.TicketConverter
+import no.kristiania.soj.groupexam.ticket.dto.TicketDTO
+import no.kristiania.soj.groupexam.ticket.db.TicketRepository
+import no.kristiania.soj.groupexam.ticket.dto.TicketConverter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.annotation.Validated
 import org.springframework.http.MediaType

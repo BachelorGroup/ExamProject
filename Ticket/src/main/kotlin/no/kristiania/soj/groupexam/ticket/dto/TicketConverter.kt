@@ -1,6 +1,6 @@
-package no.kristiania.soj.groupexam.dto
+package no.kristiania.soj.groupexam.ticket.dto
 
-import no.kristiania.soj.groupexam.db.TicketEntity
+import no.kristiania.soj.groupexam.ticket.db.TicketEntity
 
 class TicketConverter {
 
