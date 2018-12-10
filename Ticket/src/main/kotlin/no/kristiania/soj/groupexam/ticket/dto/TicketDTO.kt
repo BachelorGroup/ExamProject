@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.dto
+package no.kristiania.soj.groupexam.ticket.dto
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import io.swagger.annotations.ApiModelProperty
