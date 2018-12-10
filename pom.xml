@@ -18,6 +18,12 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
+	<modules>
+		<module>auth</module>
+		<module>user-service</module>
+		<module>user-service-dto</module>
+	</modules>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -26,6 +32,7 @@
 		<version.springcloud>Finchley.RELEASE</version.springcloud>
 		<version.springfox>2.9.2</version.springfox>
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+		<version.testcontainers>1.9.1</version.testcontainers>
 	</properties>
 
 	<dependencies>
@@ -133,6 +140,13 @@
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
+		</dependency>
+		<dependency>
+			<!-- To use Docker from tests -->
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>${version.testcontainers}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
