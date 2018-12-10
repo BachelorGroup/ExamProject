@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam
+package no.kristiania.soj.groupexam.ticket
 
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
@@ -16,7 +16,7 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 
 @RunWith(SpringRunner::class)
-@SpringBootTest(classes = [(GroupexamApplication::class)],
+@SpringBootTest(classes = [(Application::class)],
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class TicketApiTests {
 
