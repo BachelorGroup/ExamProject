@@ -26,8 +26,6 @@ class GroupexamApi {
     @Autowired
     private lateinit var crud: MovieRepository
 
-    //    @Value("\${server.servlet.context-path}")
-//    private lateint var contextPath : String
     @ApiOperation("Get list of all movies")
     @GetMapping
     fun get(@ApiParam("Title of the movie")

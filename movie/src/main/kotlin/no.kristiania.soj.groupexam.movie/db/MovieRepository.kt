@@ -38,31 +38,3 @@ interface MovieRepositoryCustom {
                info: String,
                releaseDate: String): Boolean
 }
-
-//@Repository
-//@Transactional
-//class MovieRepositoryImpl : MovieRepositoryCustom {
-//    @Autowired
-//    private lateint var em: EntityManager
-//    override fun addMovie(id: Long, title: String, director: String, rating: Int, description: String, info: String, releaseDate: String): Long {
-//        val entity = Movie(title, description, info, rating, releaseDate, id)
-//        em.persist(entity)
-//        return entity.id!!
-//    }
-//
-//    override fun updateInfo(id: Long, info: String): Boolean {
-//        val movie = em.find(Movie::class.java, id) ?: return false
-//        movie.info = info
-//        return true
-//    }
-//    override fun update(id: Long, title: String, director: String, rating: Int, description: String, info: String, releaseDate: String) : Boolean {
-//        val movie = em.find(Movie::class.java, id) ?: return false
-//        movie.title = title
-//        movie.director = director
-//        movie.rating = rating
-//        movie.description = description
-//        movie.info = info
-//        movie.releaseDate = releaseDate
-//        return true
-//    }
-//}
