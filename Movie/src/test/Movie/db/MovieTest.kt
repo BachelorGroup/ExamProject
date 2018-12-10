@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.db
+package no.kristiania.soj.movie.db
 
 import org.junit.After
 import org.junit.Before
@@ -6,7 +6,7 @@ import org.junit.Test
 
 import org.junit.Assert.*
 
-val movie : Movie? = null
+val movie = Movie? null
 
 class MovieTest {
 

@@ -1,6 +1,6 @@
-package no.kristiania.soj.groupexam.service
+package no.kristiania.soj.movie.service
 
-import no.kristiania.soj.groupexam.db.Movie
+import no.kristiania.soj.movie.db.Movie
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
 import javax.persistence.TypedQuery
@@ -52,9 +52,10 @@ class MovieService(val entityManager: EntityManager) {
         }
         return query.resultList
     }
+
     fun getMoviesByRating(rating: Int): List<Movie> {
         val query: TypedQuery<Movie>
-        if(rating == null){
+        if (rating == null) {
             query = entityManager.createQuery("select m from Movie m", Movie::class.java)
         } else {
             query = entityManager.createQuery("select m from Movie m where m.rating=?1", Movie::class.java)
@@ -62,11 +63,12 @@ class MovieService(val entityManager: EntityManager) {
         }
         return query.resultList
     }
+
     fun getMoviesByDate(releaseDate: String): List<Movie> {
         val query: TypedQuery<Movie>
-        if(releaseDate == null) {
+        if (releaseDate == null) {
             query = entityManager.createQuery("select m from Movie m", Movie::class.java)
-        }else {
+        } else {
             query = entityManager.createQuery("select m from Movie m where m.releaseDate=?1", Movie::class.java)
             query.setParameter(1, releaseDate)
         }

@@ -1,6 +1,6 @@
-package no.kristiania.soj.groupexam.dto
+package no.kristiania.soj.movie.dto
 
-import no.kristiania.soj.groupexam.db.Movie
+import no.kristiania.soj.movie.db.Movie
 
 object MovieConverter {
 
