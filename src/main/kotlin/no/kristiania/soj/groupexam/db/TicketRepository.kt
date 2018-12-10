@@ -16,12 +16,7 @@ interface TicketRepository : CrudRepository<TicketEntity, Long>, TicketRepositor
 @Transactional
 interface TicketRepositoryCustom {
 
-    fun createTicket(cinema: String,
-                     hall: Int,
-                     seatRow: Int,
-                     seatColumn: Int,
-                     movieTitle: String,
-                     movieDateTime: LocalDateTime): Long
+    fun createTicket(cinema: String, hall: Int, seatRow: Int, seatColumn: Int, movieTitle: String, movieDateTime: LocalDateTime): Long
 }
 
 @Repository
@@ -31,21 +26,9 @@ class TicketRepositoryImpl : TicketRepositoryCustom {
     @Autowired
     private lateinit var em: EntityManager
 
-    override fun createTicket(cinema: String,
-                              hall: Int,
-                              seatRow: Int,
-                              seatColumn: Int,
-                              movieTitle: String,
-                              movieDateTime: LocalDateTime)
-            : Long {
+    override fun createTicket(cinema: String, hall: Int, seatRow: Int, seatColumn: Int, movieTitle: String, movieDateTime: LocalDateTime): Long {
 
-        val entity = TicketEntity(cinema,
-                hall,
-                seatRow,
-                seatColumn,
-                movieTitle,
-                movieDateTime,
-                LocalDateTime.now())
+        val entity = TicketEntity(cinema, hall, seatRow, seatColumn, movieTitle, movieDateTime, LocalDateTime.now())
         em.persist(entity)
         return entity.id!!
     }
