@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
 import no.kristiania.soj.groupexam.db.UserRepository
-import no.kristiania.soj.groupexam.dto.UserConverter
 import no.kristiania.soj.groupexam.dto.UserDTO
 import no.kristiania.soj.groupexam.util.RestResponseFactory
 import no.kristiania.soj.groupexam.util.WrappedResponse

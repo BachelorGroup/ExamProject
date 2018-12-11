@@ -24,7 +24,7 @@ abstract class MovieTestBase {
     fun clean() {
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = port
-        RestAssured.basePath = "/movies/"
+        RestAssured.basePath = "/api/movies/"
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
 
         val list = RestAssured.given().accept(ContentType.JSON).get()

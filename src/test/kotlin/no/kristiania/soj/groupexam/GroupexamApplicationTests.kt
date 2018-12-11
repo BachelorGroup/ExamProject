@@ -1,8 +1,5 @@
 package no.kristiania.soj.groupexam
 
-import no.kristiania.soj.groupexam.ticket.util.WrappedResponse.ResponseStatus.ERROR
-import no.kristiania.soj.groupexam.ticket.util.WrappedResponse.ResponseStatus.SUCCESS
-
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
 import org.hamcrest.Matchers

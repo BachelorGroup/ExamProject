@@ -2,7 +2,6 @@ package no.kristiania.soj.groupexam
 
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
-import no.kristiania.soj.groupexam.ticket.dto.TicketDTO
 import org.hamcrest.CoreMatchers
 import org.junit.After
 import org.junit.Before
