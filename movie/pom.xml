@@ -11,21 +11,6 @@
     <name>movie</name>
     <description>Group exam project in PG6100, movie module</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-container-test-api</artifactId>
-            <version>1.1.15.Final</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-core</artifactId>
-            <version>1.1.15.Final</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <parent>
         <groupId>no.kristiania.soj</groupId>
         <artifactId>groupexam</artifactId>

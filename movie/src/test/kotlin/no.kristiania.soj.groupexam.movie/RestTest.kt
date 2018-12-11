@@ -29,11 +29,11 @@ class RestTest {
         RestAssured.basePath = "/movies"
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
 
-        var limit = Integer.MAX_VALUE
+        val limit = 10
 
         while (limit > 0) {
             val listDTO = given()
-                    .queryParam("limit", Integer.MAX_VALUE)
+                    .queryParam("limit", 10)
                     .get()
                     .then()
                     .statusCode(200)
