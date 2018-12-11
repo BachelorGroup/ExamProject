@@ -1,5 +1,6 @@
 package no.kristiania.soj.groupexam.movie.service
 
+import no.kristiania.soj.groupexam.movie.db.Movie
 import org.jboss.arquillian.container.test.api.Deployment
 import org.jboss.arquillian.junit.Arquillian
 import org.jboss.shrinkwrap.api.ShrinkWrap
@@ -15,6 +16,7 @@ class MovieServiceTest {
 
     @Before
     fun setUp() {
+
     }
 
     @After
@@ -23,6 +25,7 @@ class MovieServiceTest {
 
     @Test
     fun getMovie() {
+
     }
 
     @Test
