@@ -7,25 +7,28 @@ import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
 @Repository
-interface MovieRepository : CrudRepository<Movie, Long>, MovieRepositoryCustom {
-}
+interface MovieRepository : CrudRepository<Movie, Long>, MovieRepositoryCustom
 
 @Transactional
 interface MovieRepositoryCustom {
-    fun addMovie(title: String,
-                 director: String,
-                 rating: Int,
-                 description: String,
-                 info: String,
-                 releaseDate: String): Long
+    fun addMovie(
+            title: String,
+            director: String,
+            description: String,
+            info: String,
+            rating: Int,
+            releaseDate: String
+    ) : Long
 
-    fun update(id: Long,
-               title: String,
-               director: String,
-               rating: Int,
-               description: String,
-               info: String,
-               releaseDate: String): Boolean
+    fun patchMovie(
+            id: Long,
+            title: String,
+            director: String,
+            description: String,
+            info: String,
+            rating: Int,
+            releaseDate: String
+    ) : Boolean
 }
 
 @Repository
@@ -34,20 +37,35 @@ class MovieRepositoryImplementation : MovieRepositoryCustom {
     @Autowired
     private lateinit var entityManager: EntityManager
 
-    override fun addMovie(title: String, director: String, rating: Int, description: String, info: String, releaseDate: String): Long {
+    override fun addMovie(
+            title: String,
+            director: String,
+            description: String,
+            info: String,
+            rating: Int,
+            releaseDate: String
+    ): Long {
         val movie = Movie(title, director, description, info, rating, releaseDate)
         entityManager.persist(movie)
-
         return movie.id!!
     }
 
-    override fun update(id: Long, title: String, director: String, rating: Int, description: String, info: String, releaseDate: String): Boolean {
+    override fun patchMovie(
+            id: Long,
+            title: String,
+            director: String,
+            description: String,
+            info: String,
+            rating: Int,
+            releaseDate: String
+    ) : Boolean {
         val movie = entityManager.find(Movie::class.java, id) ?: return false
 
         movie.title = title
         movie.director = director
-        movie.rating = rating
         movie.description = description
+        movie.info = info
+        movie.rating = rating
         movie.releaseDate = releaseDate
 
         return true

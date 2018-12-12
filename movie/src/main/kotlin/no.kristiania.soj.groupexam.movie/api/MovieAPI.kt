@@ -44,9 +44,9 @@ class MovieAPI {
             id = crud.addMovie(
                     DTO.title!!,
                     DTO.director!!,
-                    DTO.rating!!,
                     DTO.description!!,
                     DTO.info!!,
+                    DTO.rating!!,
                     DTO.releaseDate!!
             )
         } catch (exception: Exception) {
@@ -109,7 +109,15 @@ class MovieAPI {
             return ResponseEntity.status(400).build()
         }
         try {
-            crud.update(id, DTO.title!!, DTO.director!!, DTO.rating!!, DTO.description!!, DTO.info!!, DTO.releaseDate!!)
+            crud.patchMovie(
+                    id,
+                    DTO.title!!,
+                    DTO.director!!,
+                    DTO.description!!,
+                    DTO.info!!,
+                    DTO.rating!!,
+                    DTO.releaseDate!!
+            )
         } catch (exception: Exception) {
             if (Throwables.getRootCause(exception) is ConstraintViolationException) {
                 return ResponseEntity.status(404).build()

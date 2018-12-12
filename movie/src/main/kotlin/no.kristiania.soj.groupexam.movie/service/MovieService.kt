@@ -55,6 +55,7 @@ class MovieService(val entityManager: EntityManager) {
 
     fun getMoviesByRating(rating: Int): List<Movie> {
         val query: TypedQuery<Movie> = entityManager.createQuery("select m from Movie m where m.rating=?1", Movie::class.java)
+
         query.setParameter(1, rating)
         return query.resultList
     }
