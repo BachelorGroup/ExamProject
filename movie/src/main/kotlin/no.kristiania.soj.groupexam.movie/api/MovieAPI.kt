@@ -4,7 +4,6 @@ import com.google.common.base.Throwables
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
-import no.kristiania.soj.groupexam.movie.db.Movie
 import no.kristiania.soj.groupexam.movie.db.MovieRepository
 import no.kristiania.soj.groupexam.movie.dto.MovieConverter
 import no.kristiania.soj.groupexam.movie.dto.MovieDTO
@@ -41,12 +40,14 @@ class MovieAPI {
         }
         val id: Long?
         try {
-            id = crud.addMovie(DTO.title!!,
+            id = crud.addMovie(
+                    DTO.title!!,
                     DTO.director!!,
                     DTO.info!!,
                     DTO.description!!,
                     DTO.rating!!,
-                    DTO.releaseDate!!)
+                    DTO.releaseDate!!
+            )
         } catch (exception: Exception) {
             if (Throwables.getRootCause(exception) is ConstraintViolationException) {
                 return ResponseEntity.status(400).build()
@@ -122,13 +123,13 @@ class MovieAPI {
     fun deleteMovie(@ApiParam("Movie ID")
                     @PathVariable("id")
                     pathID: String?): ResponseEntity<Any> {
-        val id : Long
+        val id: Long
         try {
             id = pathID!!.toLong()
-        } catch (exception : Exception) {
+        } catch (exception: Exception) {
             return ResponseEntity.status(400).build()
         }
-        if(!crud.existsById(id)) {
+        if (!crud.existsById(id)) {
             return ResponseEntity.status(404).build()
         }
         crud.deleteById(id)
