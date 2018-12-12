@@ -16,7 +16,7 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 
 @RunWith(SpringRunner::class)
-@SpringBootTest(classes = [(Application::class)],
+@SpringBootTest(classes = [(TicketApplication::class)],
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class TicketApiTests {
 
