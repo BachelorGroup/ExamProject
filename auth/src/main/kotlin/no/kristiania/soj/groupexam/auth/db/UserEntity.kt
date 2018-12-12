@@ -4,7 +4,7 @@ import javax.persistence.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
-
+//this is a comment
 @Entity
 @Table(name="USERS")
 class UserEntity(
