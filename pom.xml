@@ -19,13 +19,11 @@
 	</parent>
 
 	<modules>
-<<<<<<< HEAD
 		<module>auth</module>
 		<module>user-service</module>
 		<module>user-service-dto</module>
-=======
->>>>>>> master
 		<module>ticket</module>
+		<module>eureka</module>
 	</modules>
 
 	<properties>
