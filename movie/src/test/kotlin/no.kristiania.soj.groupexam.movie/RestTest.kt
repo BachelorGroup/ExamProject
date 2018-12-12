@@ -49,12 +49,12 @@ class RestTest {
     }
     @Test
     fun createMovie() {
-        val title: String = "title"
-        val director: String = "director"
-        val description: String = "description"
-        val info: String = "info"
-        val rating: Int = 4
-        val releaseDate: String = "release"
+        val title = "title"
+        val director = "director"
+        val description = "description"
+        val info = "info"
+        val rating = 4
+        val releaseDate = "release"
 
         val DTO = MovieDTO(title, description, info, director, rating, releaseDate)
 
@@ -91,12 +91,12 @@ class RestTest {
     }
     @Test
     fun patchMovie() {
-        val title: String = "title"
-        val director: String = "director"
-        val description: String = "description"
-        val info: String = "info"
-        val rating: Int = 4
-        val releaseDate: String = "release"
+        val title = "title"
+        val director = "director"
+        val description = "description"
+        val info = "info"
+        val rating = 4
+        val releaseDate = "release"
 
         val DTO = MovieDTO(title, description, info, director, rating, releaseDate)
 
@@ -113,12 +113,12 @@ class RestTest {
                 .statusCode(201)
                 .extract().asString()
 
-        val titleNew: String = "titleNew"
-        val directorNew: String = "directorNew"
-        val descriptionNew: String = "descriptionNew"
-        val infoNew: String = "infoNew"
-        val ratingNew: Int = 3
-        val releaseDateNew: String = "releaseNew"
+        val titleNew = "titleNew"
+        val directorNew = "directorNew"
+        val descriptionNew = "descriptionNew"
+        val infoNew = "infoNew"
+        val ratingNew = 3
+        val releaseDateNew = "releaseNew"
 
         RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .pathParam("id", id)
