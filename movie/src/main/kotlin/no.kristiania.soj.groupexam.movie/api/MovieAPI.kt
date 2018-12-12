@@ -111,7 +111,7 @@ class MovieAPI {
             return ResponseEntity.status(400).build()
         }
         try {
-            crud.patchMovie(
+            crud.update(
                     id,
                     DTO.title!!,
                     DTO.director!!,

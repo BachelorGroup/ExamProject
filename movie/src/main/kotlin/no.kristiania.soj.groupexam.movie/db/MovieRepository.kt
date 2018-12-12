@@ -20,7 +20,7 @@ interface MovieRepositoryCustom {
             releaseDate: String
     ) : Long
 
-    fun patchMovie(
+    fun update(
             id: Long,
             title: String,
             director: String,
@@ -50,7 +50,7 @@ class MovieRepositoryImplementation : MovieRepositoryCustom {
         return movie.id!!
     }
 
-    override fun patchMovie(
+    override fun update(
             id: Long,
             title: String,
             director: String,

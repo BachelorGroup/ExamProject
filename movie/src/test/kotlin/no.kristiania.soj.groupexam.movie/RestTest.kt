@@ -48,7 +48,7 @@ class RestTest {
                 .body("size()", CoreMatchers.equalTo(0))
     }
     @Test
-    fun createMovie() {
+    fun testCreateMovie() {
         val title = "title"
         val director = "director"
         val description = "description"
@@ -90,7 +90,7 @@ class RestTest {
                 .body("releaseDate", CoreMatchers.equalTo(releaseDate))
     }
     @Test
-    fun patchMovie() {
+    fun testUpdate() {
         val title = "title"
         val director = "director"
         val description = "description"
