@@ -68,7 +68,7 @@ class MovieAPI {
     fun getMovieByID(@ApiParam("MovieID")
                      @PathVariable("id")
                      pathID: String?): ResponseEntity<MovieDTO> {
-        val id : Long?
+        val id: Long?
         try {
             id = pathID!!.toLong()
         } catch (exception: Exception) {
@@ -76,5 +76,62 @@ class MovieAPI {
         }
         val DTO = crud.findById(id).orElse(null) ?: return ResponseEntity.status(404).build()
         return ResponseEntity.ok(MovieConverter.transform(DTO))
+    }
+
+    @ApiOperation("Patch a movie")
+    @GetMapping(path = ["/{id}"], consumes = [(MediaType.APPLICATION_JSON_VALUE)])
+    fun updateMovie(@ApiParam("ID of movie being patched")
+                    @PathVariable("id")
+                    pathID: String?,
+                    @ApiParam("Patched movie")
+                    @RequestBody
+                    DTO: MovieDTO): ResponseEntity<Any> {
+        val id: Long
+        try {
+            id = DTO.id!!.toLong()
+        } catch (exception: Exception) {
+            return ResponseEntity.status(404).build()
+        }
+        if (DTO.id != pathID) {
+            return ResponseEntity.status(409).build()
+        }
+        if (!crud.existsById(id)) {
+            return ResponseEntity.status(404).build()
+        }
+        if (DTO.title == null ||
+                DTO.director == null ||
+                DTO.info == null ||
+                DTO.description == null ||
+                DTO.rating == null ||
+                DTO.releaseDate == null) {
+            return ResponseEntity.status(400).build()
+        }
+        try {
+            crud.update(id, DTO.title!!, DTO.director!!, DTO.rating!!, DTO.description!!, DTO.info!!, DTO.releaseDate!!)
+        } catch (exception: Exception) {
+            if (Throwables.getRootCause(exception) is ConstraintViolationException) {
+                return ResponseEntity.status(404).build()
+            }
+            throw exception
+        }
+        return ResponseEntity.status(204).build()
+    }
+
+    @ApiOperation("Delete movie")
+    @DeleteMapping(path = ["/{id}"])
+    fun deleteMovie(@ApiParam("Movie ID")
+                    @PathVariable("id")
+                    pathID: String?): ResponseEntity<Any> {
+        val id : Long
+        try {
+            id = pathID!!.toLong()
+        } catch (exception : Exception) {
+            return ResponseEntity.status(400).build()
+        }
+        if(!crud.existsById(id)) {
+            return ResponseEntity.status(404).build()
+        }
+        crud.deleteById(id)
+        return ResponseEntity.status(204).build()
     }
 }
