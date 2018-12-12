@@ -11,8 +11,6 @@ import springfox.documentation.spring.web.plugins.Docket
 import springfox.documentation.swagger2.annotations.EnableSwagger2
 
 @SpringBootApplication(scanBasePackages = ["no.kristiania.soj.groupexam"])
-@EnableJpaRepositories(basePackages = ["no.kristiania.soj.groupexam"])
-@EntityScan(basePackages = ["no.kristiania.soj.groupexam"])
 @EnableSwagger2
 class GroupexamApplication {
 
