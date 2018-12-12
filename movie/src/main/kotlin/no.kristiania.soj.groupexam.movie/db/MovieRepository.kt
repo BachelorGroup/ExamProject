@@ -14,9 +14,9 @@ interface MovieRepository : CrudRepository<Movie, Long>, MovieRepositoryCustom {
 interface MovieRepositoryCustom {
     fun addMovie(title: String,
                  director: String,
-                 rating: String?,
+                 rating: Int,
                  description: String,
-                 info: Int?,
+                 info: String,
                  releaseDate: String): Long
 
     fun update(id: Long,
@@ -27,14 +27,15 @@ interface MovieRepositoryCustom {
                info: String,
                releaseDate: String): Boolean
 }
+
 @Repository
 @Transactional
 class MovieRepositoryImplementation : MovieRepositoryCustom {
     @Autowired
     private lateinit var entityManager: EntityManager
 
-    override fun addMovie(title: String, director: String, rating: String?, description: String, info: Int?, releaseDate: String): Long {
-       val movie = Movie(title, director, description, info, rating, releaseDate)
+    override fun addMovie(title: String, director: String, rating: Int, description: String, info: String, releaseDate: String): Long {
+        val movie = Movie(title, director, description, info, rating, releaseDate)
         entityManager.persist(movie)
 
         return movie.id!!
