@@ -15,12 +15,12 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableWebSecurity
-class WebSecurityConfig(
+class WebSecurityConfig/*(
         private val dataSource: DataSource,
         private val passwordEncoder: PasswordEncoder
-) : WebSecurityConfigurerAdapter() {
+)*/ : WebSecurityConfigurerAdapter() {
 
-
+/*
     @Bean
     override fun userDetailsServiceBean(): UserDetailsService {
         return super.userDetailsServiceBean()
@@ -30,20 +30,16 @@ class WebSecurityConfig(
     override fun authenticationManagerBean(): AuthenticationManager {
         return super.authenticationManagerBean()
     }
-
+*/
 
     override fun configure(http: HttpSecurity) {
 
-        http.httpBasic()
-                .and()
-                .logout()
-                .and()
-                .authorizeRequests()
+        http.csrf().disable()
+        http.authorizeRequests()
                 /*
                     these rules are matched one at a time, in their order.
                     this is important to keep in mind if different URL templates
                     can match the same URLs
-
                     commented out hasrole USER for now so we can access everything from /api/
                     at a later date we will choose who can access different pages and resources
                  */
@@ -60,14 +56,39 @@ class WebSecurityConfig(
                  */
                 .anyRequest().hasRole("ADMIN")
                 .and()
-                .csrf().disable()
-                //
+                /*
+                    there are many different ways to define
+                    how login is done.
+                    So here we need to configure it.
+                    We start from looking at "Basic" HTTP,
+                    which is the simplest form of authentication
+                  */
+                .httpBasic()
+        /*
+        .formLogin()
+        .loginPage("/login")
+        .permitAll()
+        .failureUrl("/login?error=true")
+        .defaultSuccessUrl("/index")
+        .and()
+        .logout()
+        .logoutSuccessUrl("/index")
+        */
+        /*
+        http.httpBasic()
+                .and()
+                .logout()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                */
     }
 
     override fun configure(auth: AuthenticationManagerBuilder) {
-
+        //{noop} is just there to say we want the password as plaintext and not encoded
+        auth.inMemoryAuthentication()
+                .withUser("foo").password("{noop}bar").roles("USER").and()
+                .withUser("admin").password("{noop}admin").roles("ADMIN", "USER")
+        /*
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("""
@@ -81,5 +102,6 @@ class WebSecurityConfig(
                      WHERE x.username=? and y.user_entity_username=x.username
                      """)
                 .passwordEncoder(passwordEncoder)
+        */
     }
 }

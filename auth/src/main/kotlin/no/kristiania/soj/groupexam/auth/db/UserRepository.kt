@@ -25,21 +25,21 @@ class UserRepositoryImpl : UserRepositoryCustom {
 
     @Autowired
     private lateinit var em: EntityManager
-
+/*
     @Autowired
     private lateinit var passwordEncoder: PasswordEncoder
-
+*/
     override fun createUser(username: String, password: String)
             : Boolean {
 
-        val hash = passwordEncoder.encode(password)
+        //val hash = passwordEncoder.encode(password)
 
         if (em.find(UserEntity::class.java, username) != null) {
             //if we find a user with the existing username already, return false
             return false
         }
         //need to use hashed password instead of password when we add postgres
-        val user = UserEntity(username, hash, Collections.singleton("USER"), true)
+        val user = UserEntity(username, password, Collections.singleton("USER"), true)
         em.persist(user)
         return true
     }
@@ -47,14 +47,14 @@ class UserRepositoryImpl : UserRepositoryCustom {
     override fun createAdmin(username: String, password: String)
             : Boolean {
 
-        val hash = passwordEncoder.encode(password)
+        //val hash = passwordEncoder.encode(password)
 
         if (em.find(UserEntity::class.java, username) != null) {
             //if we find a user with the existing username already, return false
             return false
         }
         //need to use hashed password instead of password when we add postgres
-        val user = UserEntity(username, hash, Collections.singleton("ADMIN"), true)
+        val user = UserEntity(username, password, Collections.singleton("ADMIN"), true)
         em.persist(user)
         return true
     }

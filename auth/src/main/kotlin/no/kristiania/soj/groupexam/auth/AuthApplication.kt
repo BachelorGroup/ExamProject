@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 
 @SpringBootApplication(scanBasePackages = ["no.kristiania.soj.groupexam.auth"])
 @EnableSwagger2
-class GatewayApplication {
+class AuthApplication {
 
     @Bean
     fun swaggerApi(): Docket {
@@ -22,5 +22,5 @@ class GatewayApplication {
 }
 
 fun main(args: Array<String>) {
-    SpringApplication.run(GatewayApplication::class.java, *args)
+    SpringApplication.run(AuthApplication::class.java, *args)
 }

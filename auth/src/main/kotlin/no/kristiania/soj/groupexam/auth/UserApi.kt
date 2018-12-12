@@ -26,13 +26,13 @@ import javax.validation.ConstraintViolationException
 @RequestMapping(path = ["/api"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
 @Validated
 class UserApi(
-        private val authenticationManager: AuthenticationManager,
-        private val userDetailsService: UserDetailsService
+        /*private val authenticationManager: AuthenticationManager,
+        private val userDetailsService: UserDetailsService*/
 ){
 
     @Autowired
     private lateinit var userCrud: UserRepository
-
+/*
     @PostMapping(path = ["/signUp"],
             consumes = [(MediaType.APPLICATION_JSON_UTF8_VALUE)])
     fun signIn(@RequestBody dto: UserDTO)
@@ -83,7 +83,7 @@ class UserApi(
         }
 
         return ResponseEntity.status(400).build()
-    }
+    }*/
 
     @ApiOperation("Simple user creation")
     @PostMapping(path = ["/users"],

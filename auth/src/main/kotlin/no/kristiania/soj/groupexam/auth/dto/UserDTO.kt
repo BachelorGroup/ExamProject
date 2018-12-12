@@ -13,5 +13,9 @@ class UserDTO(
 
         @ApiModelProperty("Password of user")
         @get:NotBlank
-        var password: String? = null
+        var password: String? = null,
+
+        @ApiModelProperty("Role of user")
+        @get:NotNull
+        var roles: MutableSet<String>? = null
 )

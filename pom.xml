@@ -27,8 +27,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<kotlin.version>1.2.70</kotlin.version>
+		<version.java>1.8</version.java>
+		<version.kotlin>1.2.70</version.kotlin>
 		<version.springcloud>Finchley.SR1</version.springcloud>
 		<version.springfox>2.9.2</version.springfox>
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>

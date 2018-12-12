@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.auth.util
+/*package no.kristiania.soj.groupexam.auth.util
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -11,4 +11,4 @@ class PasswordConfig {
     fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
     }
-}
+}*/

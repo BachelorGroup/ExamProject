@@ -18,14 +18,17 @@ import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.http.MediaType
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
 import org.testcontainers.containers.GenericContainer
 import java.util.*
 
+@ActiveProfiles("test")
 @RunWith(SpringRunner::class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = [(UserApiTests.Companion.Initializer::class)])
+@SpringBootTest(classes = [(AuthApplication::class)],
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@ContextConfiguration(initializers = [(UserApiTests.Companion.Initializer::class)])
 class UserApiTests {
 
     @LocalServerPort
@@ -35,9 +38,14 @@ class UserApiTests {
     @Autowired
     private lateinit var repository: UserRepository
 
+    private val adminId = "admin"
+    private val adminPass = "admin"
+    private val userId = "foo"
+    private val userPass = "bar"
+/*
     @Autowired
     private lateinit var passwordEncoder: PasswordEncoder
-
+*//*
     companion object {
 
         class KGenericContainer(imageName: String) : GenericContainer<KGenericContainer>(imageName)
@@ -63,7 +71,7 @@ class UserApiTests {
             }
         }
     }
-
+*/
     @Before
     @After
     fun clean() {
@@ -84,7 +92,7 @@ class UserApiTests {
 
     /**
      *   Utility function used to create a new user in the database
-     */
+     *//*
     private fun registerUser(id: String, password: String): String {
 
 
@@ -108,8 +116,8 @@ class UserApiTests {
                 .get("/user")
                 .then()
                 .statusCode(expectedCode)
-    }
-
+    }*/
+/*
 
     @Test
     fun testLogin() {
@@ -192,7 +200,7 @@ class UserApiTests {
                 .extract().cookie("SESSION")
 
         checkAuthenticatedCookie(auth, 200)
-    }
+    }*/
 
     @Test
     fun testGetAll() {
@@ -326,7 +334,7 @@ class UserApiTests {
     fun testNotAuthorizedUser() {
 
         RestAssured.given()
-                .auth().basic("foo", "bar123")
+                .auth().basic(userId, userPass)
                 .get("/testAdmin")
                 .then()
                 .statusCode(403)
@@ -338,7 +346,7 @@ class UserApiTests {
         //as we are currently just using the in memory auth from httpbasic
         //we have to use one of those 'users' and not the ones created in this test
         RestAssured.given()
-                .auth().basic("foo", "bar123")
+                .auth().basic(userId, userPass)
                 .get("/testUser")
                 .then()
                 .statusCode(200)
@@ -350,7 +358,7 @@ class UserApiTests {
         //as we are currently just using the in memory auth from httpbasic
         //we have to use one of those 'users' and not the ones created in this test
         RestAssured.given()
-                .auth().basic("admin", "admin")
+                .auth().basic(adminId, adminPass)
                 .get("/testAdmin")
                 .then()
                 .statusCode(200)
