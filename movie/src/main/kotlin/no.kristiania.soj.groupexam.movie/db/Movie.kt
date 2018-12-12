@@ -12,26 +12,21 @@ import javax.validation.constraints.Size
 class Movie(
 
         @get:NotBlank
-        @get:Size(max = 64)
         var title: String,
 
         @get:NotBlank
-        @get:Size(max = 64)
         var director: String,
 
         @get:NotBlank
-        @get:Size(max = 256)
         var description: String,
 
         @get:NotBlank
-        @get:Size(max = 256)
         var info: String,
 
-        @get:NotBlank
+        @get:NotNull
         var rating: Int,
 
-        @get:Max(2200)
-        @get:NotNull
+        @get:NotBlank
         var releaseDate: String,
 
         @get:Id

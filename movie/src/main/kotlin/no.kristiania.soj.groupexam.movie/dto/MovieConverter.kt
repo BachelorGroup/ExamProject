@@ -13,7 +13,7 @@ object MovieConverter {
                 info = entity.info,
                 rating = entity.rating,
                 releaseDate = entity.releaseDate
-        ).apply { id = entity.id?.toString() }
+        )
     }
 
     fun transform(entities: Iterable<Movie>): List<MovieDTO> {

@@ -26,7 +26,7 @@ class RestTest {
     fun clean() {
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = port
-        RestAssured.basePath = "/movies"
+        RestAssured.basePath = "/api/movies"
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
 
         val list = RestAssured.given().accept(ContentType.JSON).get()
@@ -56,7 +56,7 @@ class RestTest {
         val rating = 4
         val releaseDate = "release"
 
-        val DTO = MovieDTO(title, description, info, director, rating, releaseDate)
+        val dto = MovieDTO(title, description, info, director, rating, releaseDate)
 
         RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .get()
@@ -65,7 +65,7 @@ class RestTest {
                 .body("size()", CoreMatchers.equalTo(0))
 
         val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .body(DTO)
+                .body(dto)
                 .post()
                 .then()
                 .statusCode(201)
