@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.ConstraintViolationException
 
 @RestController
-@RequestMapping(path = ["/api/movie"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
+@RequestMapping(path = ["/api/movies"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
 @Validated
 class MovieAPI {
+
     @Autowired
     private lateinit var crud: MovieRepository
 
