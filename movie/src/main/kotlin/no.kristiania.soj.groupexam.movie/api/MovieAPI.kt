@@ -1,6 +1,7 @@
 package no.kristiania.soj.groupexam.movie.api
 
 import com.google.common.base.Throwables
+import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
@@ -14,6 +15,7 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.ConstraintViolationException
 
+@Api(value= "/movies", description = "movies that a consumer can watch")
 @RestController
 @RequestMapping(path = ["/api/movies"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
 @Validated

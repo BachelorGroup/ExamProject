@@ -30,6 +30,6 @@ class MovieDTO(
         @get:NotBlank
         var releaseDate: String? = null,
 
-        @ApiModelProperty("The idgit  of the movie")
+        @ApiModelProperty("The id  of the movie")
         var id: String? = null
 )
