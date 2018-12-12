@@ -7,9 +7,11 @@ import springfox.documentation.builders.PathSelectors
 import springfox.documentation.spi.DocumentationType
 import springfox.documentation.spring.web.plugins.Docket
 import springfox.documentation.swagger2.annotations.EnableSwagger2
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 
 @SpringBootApplication(scanBasePackages = ["no.kristiania.soj.groupexam.ticket"])
 @EnableSwagger2
+@EnableDiscoveryClient
 class Application {
 
     @Bean
