@@ -53,11 +53,11 @@ class GroupexamApi {
         val list = if (movie.isNullOrBlank() && director.isNullOrBlank()) {
             crud.findAll()
         } else if (!movie.isNullOrBlank() && !director.isNullOrBlank()) {
-            crud.findAllByMovieAndDirector(movie!!, director!!)
+            crud.findAllByMovieAndDirector(movie, director)
         } else if (!movie.isNullOrBlank()) {
-            crud.findAllByMovie(movie!!)
+            crud.findAllByMovie(movie)
         } else if (!releaseDate.isNullOrBlank()) {
-            crud.findAllByDate(releaseDate!!)
+            crud.findAllByDate(releaseDate)
         } else if (!rating.toString().isEmpty()) {
             crud.findAllByRating(rating!!)
         } else if (!id.toString().isEmpty()) {
