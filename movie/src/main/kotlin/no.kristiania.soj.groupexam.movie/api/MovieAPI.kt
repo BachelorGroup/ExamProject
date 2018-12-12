@@ -55,10 +55,26 @@ class MovieAPI {
         }
         return ResponseEntity.status(201).body(id)
     }
+
     @ApiOperation("Get movies")
     @GetMapping
-    fun getMovies () : ResponseEntity<List<MovieDTO>> {
+    fun getMovies(): ResponseEntity<List<MovieDTO>> {
         val movieList = crud.findAll()
         return ResponseEntity.ok(MovieConverter.transform(movieList))
+    }
+
+    @ApiOperation("Get movie by ID")
+    @GetMapping(path = ["/{id}"])
+    fun getMovieByID(@ApiParam("MovieID")
+                     @PathVariable("id")
+                     pathID: String?): ResponseEntity<MovieDTO> {
+        val id : Long?
+        try {
+            id = pathID!!.toLong()
+        } catch (exception: Exception) {
+            return ResponseEntity.status(404).build()
+        }
+        val DTO = crud.findById(id).orElse(null) ?: return ResponseEntity.status(404).build()
+        return ResponseEntity.ok(MovieConverter.transform(DTO))
     }
 }
