@@ -43,9 +43,9 @@ class MovieAPI {
             id = crud.addMovie(
                     DTO.title!!,
                     DTO.director!!,
-                    DTO.info!!,
-                    DTO.description!!,
                     DTO.rating!!,
+                    DTO.description!!,
+                    DTO.info!!,
                     DTO.releaseDate!!
             )
         } catch (exception: Exception) {
