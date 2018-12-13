@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.movie.util
+package no.kristiania.soj.groupexam.auth.util
 
 import io.swagger.annotations.ApiModelProperty
 

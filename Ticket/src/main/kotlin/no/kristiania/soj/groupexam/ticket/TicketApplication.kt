@@ -1,18 +1,18 @@
-package no.kristiania.soj.groupexam.movie
+package no.kristiania.soj.groupexam.ticket
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.context.annotation.Bean
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import springfox.documentation.builders.PathSelectors
 import springfox.documentation.spi.DocumentationType
 import springfox.documentation.spring.web.plugins.Docket
 import springfox.documentation.swagger2.annotations.EnableSwagger2
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 
-@SpringBootApplication(scanBasePackages = ["no.kristiania.soj.groupexam"])
+@SpringBootApplication(scanBasePackages = ["no.kristiania.soj.groupexam.ticket"])
 @EnableSwagger2
-class GroupexamApplication {
+@EnableDiscoveryClient
+class TicketApplication {
 
     @Bean
     fun swaggerApi(): Docket {
@@ -24,5 +24,5 @@ class GroupexamApplication {
 }
 
 fun main(args: Array<String>) {
-    SpringApplication.run(GroupexamApplication::class.java, *args)
+    SpringApplication.run(TicketApplication::class.java, *args)
 }
