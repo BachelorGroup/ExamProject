@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 import javax.persistence.EntityManager
 
 @Repository
-interface MovieRepository : CrudRepository<MovieEntity, Long>, MovieRepositoryCustom
+interface MovieRepository : CrudRepository<MovieEntity, Long>, MovieRepositoryCustom{
+
+}
 
 @Transactional
 interface MovieRepositoryCustom {
@@ -18,23 +20,13 @@ interface MovieRepositoryCustom {
             description: String,
             info: String,
             rating: Int,
-            releaseDate: ZonedDateTime
+            releaseDate: LocalDateTime
     ) : Long
-
-    fun update(
-            id: Long,
-            title: String,
-            director: String,
-            description: String,
-            info: String,
-            rating: Int,
-            releaseDate: ZonedDateTime
-    ) : Boolean
 }
 
 @Repository
 @Transactional
-class MovieRepositoryImplementation : MovieRepositoryCustom {
+class MovieRepositoryImpl : MovieRepositoryCustom {
     @Autowired
     private lateinit var entityManager: EntityManager
 
@@ -44,31 +36,10 @@ class MovieRepositoryImplementation : MovieRepositoryCustom {
             description: String,
             info: String,
             rating: Int,
-            releaseDate: ZonedDateTime
+            releaseDate: LocalDateTime
     ): Long {
         val movie = MovieEntity(title, director, description, info, rating, releaseDate)
         entityManager.persist(movie)
         return movie.id!!
-    }
-
-    override fun update(
-            id: Long,
-            title: String,
-            director: String,
-            description: String,
-            info: String,
-            rating: Int,
-            releaseDate: ZonedDateTime
-    ) : Boolean {
-        val movie = entityManager.find(MovieEntity::class.java, id) ?: return false
-
-        movie.title = title
-        movie.director = director
-        movie.description = description
-        movie.info = info
-        movie.rating = rating
-        movie.releaseDate = releaseDate
-
-        return true
     }
 }

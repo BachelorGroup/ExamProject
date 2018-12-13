@@ -1,6 +1,6 @@
 package no.kristiania.soj.groupexam.movie
 
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -25,7 +25,7 @@ class MovieEntity(
         var rating: Int,
 
         @get:NotNull
-        var releaseDate: ZonedDateTime,
+        var releaseDate: LocalDateTime,
 
         @get:Id
         @get:GeneratedValue

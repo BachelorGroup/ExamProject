@@ -11,13 +11,15 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
+import java.time.Month
+import java.time.format.DateTimeFormatter
 
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = [(MovieApplication::class)],
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class RestTest {
+class MovieApiTest {
     @LocalServerPort
     var port = 0
 
@@ -55,7 +57,8 @@ class RestTest {
         val description = "description"
         val info = "info"
         val rating = 4
-        val releaseDate = ZonedDateTime.now()
+        val releaseDate = LocalDateTime.of(1992, Month.APRIL, 20, 9, 20)
+        val formattedDate = releaseDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 
         val dto = MovieDTO(title, director, description, info, rating, releaseDate)
 
@@ -87,7 +90,7 @@ class RestTest {
                 .body("description", CoreMatchers.equalTo(description))
                 .body("info", CoreMatchers.equalTo(info))
                 .body("rating", CoreMatchers.equalTo(rating))
-                .body("releaseDate", CoreMatchers.equalTo(releaseDate))
+                .body("releaseDate", CoreMatchers.equalTo(formattedDate))
                 .body("id", CoreMatchers.equalTo(id))
     }
 
@@ -98,7 +101,9 @@ class RestTest {
         val description = "description"
         val info = "info"
         val rating = 4
-        val releaseDate = ZonedDateTime.now()
+        val releaseDate = LocalDateTime.of(1992, Month.APRIL, 20, 9, 20)
+        val formattedDate = releaseDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+
 
         val dto = MovieDTO(title, director, description, info, rating, releaseDate)
 
@@ -120,7 +125,8 @@ class RestTest {
         val descriptionNew = "descriptionNew"
         val infoNew = "infoNew"
         val ratingNew = 3
-        val releaseDateNew = ZonedDateTime.now()
+        val releaseDateNew = LocalDateTime.of(1992, Month.APRIL, 20, 9, 20)
+        val formattedDateNew = releaseDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 
         RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .pathParam("id", id)
@@ -146,7 +152,7 @@ class RestTest {
                 .body("description", CoreMatchers.equalTo(descriptionNew))
                 .body("info", CoreMatchers.equalTo(infoNew))
                 .body("rating", CoreMatchers.equalTo(ratingNew))
-                .body("releaseDate", CoreMatchers.equalTo(releaseDateNew))
+                .body("releaseDate", CoreMatchers.equalTo(formattedDateNew))
                 .body("id", CoreMatchers.equalTo(id))
     }
 }

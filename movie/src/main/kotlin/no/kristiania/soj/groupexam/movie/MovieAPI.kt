@@ -1,18 +1,16 @@
 package no.kristiania.soj.groupexam.movie
 
 import com.google.common.base.Throwables
-import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.validation.annotation.Validated
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.ConstraintViolationException
 
-@Api(value = "/movie", description = "Movies that a consumer can watch")
 @RestController
 @RequestMapping(path = ["/movie"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
 @Validated
@@ -23,7 +21,7 @@ class MovieAPI {
 
     @ApiOperation("Create movie")
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_UTF8_VALUE])
-    @ApiResponse(code = 201, message = "MovieEntity is presisted")
+    @ApiResponse(code = 201, message = "MovieEntity is persisted")
     fun createMovie(@ApiParam("All info about movies that are created")
                     @RequestBody
                     DTO: MovieDTO): ResponseEntity<Long> {
@@ -59,72 +57,72 @@ class MovieAPI {
 
     @ApiOperation("Get movies")
     @GetMapping
-    fun getMovies(): ResponseEntity<List<MovieDTO>> {
-        val movieList = crud.findAll()
-        return ResponseEntity.ok(MovieConverter.transform(movieList))
+    fun getAll(): ResponseEntity<List<MovieDTO>> {
+        val list = crud.findAll()
+        return ResponseEntity.ok(MovieConverter.transform(list))
     }
 
     @ApiOperation("Get movie by ID")
     @GetMapping(path = ["/{id}"])
     fun getMovieByID(@ApiParam("MovieID")
                      @PathVariable("id")
-                     pathID: String?): ResponseEntity<MovieDTO> {
+                     pathId: String?): ResponseEntity<MovieDTO> {
         val id: Long?
         try {
-            id = pathID!!.toLong()
+            id = pathId!!.toLong()
         } catch (exception: Exception) {
             return ResponseEntity.status(404).build()
         }
-        val DTO = crud.findById(id).orElse(null) ?: return ResponseEntity.status(404).build()
-        return ResponseEntity.ok(MovieConverter.transform(DTO))
+        val dto = crud.findById(id).orElse(null) ?: return ResponseEntity.status(404).build()
+        return ResponseEntity.ok(MovieConverter.transform(dto))
     }
 
-    @ApiOperation("Patch a movie")
-    @GetMapping(path = ["/{id}"], consumes = [(MediaType.APPLICATION_JSON_VALUE)])
-    fun updateMovie(@ApiParam("ID of movie being patched")
-                    @PathVariable("id")
-                    pathID: String?,
-                    @ApiParam("Patched movie")
-                    @RequestBody
-                    DTO: MovieDTO): ResponseEntity<Any> {
-        val id: Long
-        try {
-            id = DTO.id!!.toLong()
-        } catch (exception: Exception) {
-            return ResponseEntity.status(404).build()
-        }
-        if (DTO.id != pathID) {
-            return ResponseEntity.status(409).build()
-        }
-        if (!crud.existsById(id)) {
-            return ResponseEntity.status(404).build()
-        }
-        if (DTO.title == null ||
-                DTO.director == null ||
-                DTO.info == null ||
-                DTO.description == null ||
-                DTO.rating == null ||
-                DTO.releaseDate == null) {
-            return ResponseEntity.status(400).build()
-        }
-        try {
-            crud.update(
-                    id,
-                    DTO.title!!,
-                    DTO.director!!,
-                    DTO.description!!,
-                    DTO.info!!,
-                    DTO.rating!!,
-                    DTO.releaseDate!!
-            )
-        } catch (exception: Exception) {
-            if (Throwables.getRootCause(exception) is ConstraintViolationException) {
-                return ResponseEntity.status(404).build()
-            }
-            throw exception
-        }
-        return ResponseEntity.status(204).build()
-    }
+//    @ApiOperation("Update a movie")
+//    @GetMapping(path = ["/{id}"], consumes = [(MediaType.APPLICATION_JSON_VALUE)])
+//    fun updateMovie(@ApiParam("ID of movie being patched")
+//                    @PathVariable("id")
+//                    pathId: String?,
+//                    @ApiParam("Patched movie")
+//                    @RequestBody
+//                    DTO: MovieDTO): ResponseEntity<Any> {
+//        val dtoId: Long
+//        try {
+//            dtoId = DTO.id!!.toLong()
+//        } catch (exception: Exception) {
+//            return ResponseEntity.status(404).build()
+//        }
+//        if (DTO.id != pathId) {
+//            return ResponseEntity.status(409).build()
+//        }
+//        if (!crud.existsById(dtoId)) {
+//            return ResponseEntity.status(404).build()
+//        }
+//        if (DTO.title == null ||
+//                DTO.director == null ||
+//                DTO.info == null ||
+//                DTO.description == null ||
+//                DTO.rating == null ||
+//                DTO.releaseDate == null) {
+//            return ResponseEntity.status(400).build()
+//        }
+//        try {
+//            crud.update(
+//                    dtoId,
+//                    DTO.title!!,
+//                    DTO.director!!,
+//                    DTO.description!!,
+//                    DTO.info!!,
+//                    DTO.rating!!,
+//                    DTO.releaseDate!!
+//            )
+//        } catch (exception: Exception) {
+//            if (Throwables.getRootCause(exception) is ConstraintViolationException) {
+//                return ResponseEntity.status(404).build()
+//            }
+//            throw exception
+//        }
+//        return ResponseEntity.status(204).build()
+//    }
 
     @ApiOperation("Delete movie")
     @DeleteMapping(path = ["/{id}"])

@@ -9,7 +9,7 @@ import springfox.documentation.spring.web.plugins.Docket
 import springfox.documentation.swagger2.annotations.EnableSwagger2
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 
-@SpringBootApplication(scanBasePackages = ["no.kristiania.soj.groupexam"])
+@SpringBootApplication(scanBasePackages = ["no.kristiania.soj.groupexam.movie"])
 @EnableSwagger2
 @EnableDiscoveryClient
 class MovieApplication {

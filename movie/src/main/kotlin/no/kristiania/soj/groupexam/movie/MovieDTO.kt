@@ -1,7 +1,7 @@
 package no.kristiania.soj.groupexam.movie
 
 import io.swagger.annotations.ApiModelProperty
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 
 data class MovieDTO(
 
@@ -21,7 +21,7 @@ data class MovieDTO(
         var rating: Int? = null,
 
         @ApiModelProperty("The release date of the movie")
-        var releaseDate: ZonedDateTime? = null,
+        var releaseDate: LocalDateTime? = null,
 
         @ApiModelProperty("ID of the movie")
         var id: String? = null
