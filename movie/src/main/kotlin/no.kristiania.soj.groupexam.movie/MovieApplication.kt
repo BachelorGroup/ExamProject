@@ -12,7 +12,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = ["no.kristiania.soj.groupexam.movie"])
 @EnableSwagger2
 @EnableDiscoveryClient
-class TicketApplication {
+class MovieApplication {
 
     @Bean
     fun swaggerApi(): Docket {
@@ -24,5 +24,5 @@ class TicketApplication {
 }
 
 fun main(args: Array<String>) {
-    SpringApplication.run(TicketApplication::class.java, *args)
+    SpringApplication.run(MovieApplication::class.java, *args)
 }
