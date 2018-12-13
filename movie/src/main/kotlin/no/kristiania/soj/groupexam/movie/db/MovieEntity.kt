@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.movie
+package no.kristiania.soj.groupexam.movie.db
 
 import java.time.LocalDateTime
 import javax.persistence.Entity

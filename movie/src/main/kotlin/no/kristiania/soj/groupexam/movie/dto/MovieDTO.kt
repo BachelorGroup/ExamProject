@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.movie
+package no.kristiania.soj.groupexam.movie.dto
 
 import io.swagger.annotations.ApiModelProperty
 import java.time.LocalDateTime

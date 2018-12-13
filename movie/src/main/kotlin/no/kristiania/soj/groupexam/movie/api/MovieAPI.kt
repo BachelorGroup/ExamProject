@@ -1,9 +1,12 @@
-package no.kristiania.soj.groupexam.movie
+package no.kristiania.soj.groupexam.movie.api
 
 import com.google.common.base.Throwables
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
+import no.kristiania.soj.groupexam.movie.dto.MovieConverter
+import no.kristiania.soj.groupexam.movie.dto.MovieDTO
+import no.kristiania.soj.groupexam.movie.MovieRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.annotation.Validated
 import org.springframework.http.MediaType
@@ -80,10 +83,10 @@ class MovieAPI {
     @ApiOperation("Update movie")
     @PutMapping(path = ["/{id}"], consumes = [(MediaType.APPLICATION_JSON_VALUE)])
     fun updateMovie(
-            @ApiParam("The id of the movie")
+            @ApiParam("The ID of the movie")
             @PathVariable("id")
             pathId: String?,
-            @ApiParam("The ticket that will replace the old one")
+            @ApiParam("Updated Movie ID")
             @RequestBody
             dto: MovieDTO
 
@@ -92,7 +95,7 @@ class MovieAPI {
         val dtoId: Long
         try {
             dtoId = dto.id!!.toLong()
-        } catch (e: Exception) {
+        } catch (exception: Exception) {
 
             return ResponseEntity.status(404).build()
         }
@@ -112,9 +115,9 @@ class MovieAPI {
         }
 
         try {
-
+            crud.update(dtoId, dto.title!!, dto.director!!, dto.description!!, dto.info!!, dto.rating!!, dto.releaseDate!!)
         } catch (e: Exception) {
-            if(Throwables.getRootCause(e) is ConstraintViolationException) {
+            if (Throwables.getRootCause(e) is ConstraintViolationException) {
                 return ResponseEntity.status(400).build()
             }
             throw e

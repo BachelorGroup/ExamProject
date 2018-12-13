@@ -1,7 +1,9 @@
-package no.kristiania.soj.groupexam.movie
+package no.kristiania.soj.groupexam.movie.api
 
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
+import no.kristiania.soj.groupexam.movie.MovieApplication
+import no.kristiania.soj.groupexam.movie.dto.MovieDTO
 import org.hamcrest.CoreMatchers
 import org.junit.After
 import org.junit.Before
