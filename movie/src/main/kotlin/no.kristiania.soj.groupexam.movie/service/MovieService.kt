@@ -2,6 +2,7 @@ package no.kristiania.soj.groupexam.movie.service
 
 import no.kristiania.soj.groupexam.movie.db.Movie
 import org.springframework.stereotype.Service
+import java.time.ZonedDateTime
 import javax.persistence.EntityManager
 import javax.persistence.TypedQuery
 import javax.transaction.Transactional
@@ -23,7 +24,7 @@ class MovieService(val entityManager: EntityManager) {
                     description: String,
                     info: String,
                     rating: Int,
-                    releaseDate: String): Long? {
+                    releaseDate: ZonedDateTime): Long? {
         val movie = Movie(title = title,
                 director = director,
                 description = description,
