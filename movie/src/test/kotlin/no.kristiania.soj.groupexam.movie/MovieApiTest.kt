@@ -11,8 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
-import java.time.LocalDateTime
-import java.time.Month
+import java.time.*
 import java.time.format.DateTimeFormatter
 
 
@@ -28,7 +27,7 @@ class MovieApiTest {
     fun clean() {
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = port
-        RestAssured.basePath = "/movie"
+        RestAssured.basePath = "/api/movie"
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
 
         val list = RestAssured.given().accept(ContentType.JSON).get()
@@ -57,7 +56,7 @@ class MovieApiTest {
         val description = "description"
         val info = "info"
         val rating = 4
-        val releaseDate = LocalDateTime.of(1992, Month.APRIL, 20, 9, 20)
+        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10)
         val formattedDate = releaseDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 
         val dto = MovieDTO(title, director, description, info, rating, releaseDate)
@@ -95,23 +94,17 @@ class MovieApiTest {
     }
 
     @Test
-    fun testUpdate() {
+    fun testUpdateMovie() {
         val title = "title"
         val director = "director"
         val description = "description"
         val info = "info"
         val rating = 4
-        val releaseDate = LocalDateTime.of(1992, Month.APRIL, 20, 9, 20)
-        val formattedDate = releaseDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
+        val formattedDate = releaseDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
 
         val dto = MovieDTO(title, director, description, info, rating, releaseDate)
-
-        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .get()
-                .then()
-                .statusCode(200)
-                .body("size()", CoreMatchers.equalTo(0))
 
         val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .body(dto)
@@ -125,7 +118,7 @@ class MovieApiTest {
         val descriptionNew = "descriptionNew"
         val infoNew = "infoNew"
         val ratingNew = 3
-        val releaseDateNew = LocalDateTime.of(1992, Month.APRIL, 20, 9, 20)
+        val releaseDateNew = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10)
         val formattedDateNew = releaseDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 
         RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -152,7 +145,7 @@ class MovieApiTest {
                 .body("description", CoreMatchers.equalTo(descriptionNew))
                 .body("info", CoreMatchers.equalTo(infoNew))
                 .body("rating", CoreMatchers.equalTo(ratingNew))
-                .body("releaseDate", CoreMatchers.equalTo(formattedDateNew))
+                .body("releaseDate", CoreMatchers.equalTo(releaseDateNew))
                 .body("id", CoreMatchers.equalTo(id))
     }
 }
