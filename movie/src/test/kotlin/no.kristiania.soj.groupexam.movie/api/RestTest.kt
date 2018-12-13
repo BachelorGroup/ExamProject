@@ -51,14 +51,6 @@ class RestTest {
     }
 
     @Test
-    fun testCleanDB() {
-
-        RestAssured.given().get().then()
-                .statusCode(200)
-                .body("size()", CoreMatchers.equalTo(0))
-    }
-
-    @Test
     fun testCreateMovie() {
         val title = "title"
         val director = "director"
@@ -67,7 +59,7 @@ class RestTest {
         val rating = 4
         val releaseDate = ZonedDateTime.now()
 
-        val dto = MovieDTO(null, title, director, description, info, rating, releaseDate)
+        val dto = MovieDTO(title, director, description, info, rating, releaseDate)
 
         RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .get()
@@ -92,14 +84,15 @@ class RestTest {
                 .get("/{id}")
                 .then()
                 .statusCode(200)
-                .body("id", CoreMatchers.equalTo(id))
                 .body("title", CoreMatchers.equalTo(title))
                 .body("director", CoreMatchers.equalTo(director))
                 .body("description", CoreMatchers.equalTo(description))
                 .body("info", CoreMatchers.equalTo(info))
                 .body("rating", CoreMatchers.equalTo(rating))
                 .body("releaseDate", CoreMatchers.equalTo(releaseDate))
+                .body("id", CoreMatchers.equalTo(id))
     }
+
     @Test
     fun testUpdate() {
         val title = "title"
@@ -109,7 +102,7 @@ class RestTest {
         val rating = 4
         val releaseDate = ZonedDateTime.now()
 
-        val dto = MovieDTO(null, title, director, description, info, rating, releaseDate)
+        val dto = MovieDTO(title, director, description, info, rating, releaseDate)
 
         RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .get()
@@ -150,12 +143,12 @@ class RestTest {
                 .get("/{id}")
                 .then()
                 .statusCode(200)
-                .body("id", CoreMatchers.equalTo(id))
                 .body("title", CoreMatchers.equalTo(titleNew))
                 .body("director", CoreMatchers.equalTo(directorNew))
                 .body("description", CoreMatchers.equalTo(descriptionNew))
                 .body("info", CoreMatchers.equalTo(infoNew))
                 .body("rating", CoreMatchers.equalTo(ratingNew))
                 .body("releaseDate", CoreMatchers.equalTo(releaseDateNew))
+                .body("id", CoreMatchers.equalTo(id))
     }
 }

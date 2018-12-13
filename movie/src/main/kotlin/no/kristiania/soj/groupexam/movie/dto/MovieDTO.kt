@@ -4,8 +4,6 @@ import io.swagger.annotations.ApiModelProperty
 import java.time.ZonedDateTime
 
 data class MovieDTO(
-        @ApiModelProperty("ID of the movie")
-        var id: String? = null,
 
         @ApiModelProperty("Title of the movie")
         var title: String? = null,
@@ -23,5 +21,8 @@ data class MovieDTO(
         var rating: Int? = null,
 
         @ApiModelProperty("The release date of the movie")
-        var releaseDate: ZonedDateTime? = null
+        var releaseDate: ZonedDateTime? = null,
+
+        @ApiModelProperty("ID of the movie")
+        var id: String? = null
 )

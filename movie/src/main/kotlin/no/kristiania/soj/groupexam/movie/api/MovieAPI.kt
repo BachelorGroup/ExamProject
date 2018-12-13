@@ -15,7 +15,7 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.ConstraintViolationException
 
-@Api(value= "/api/movies", description = "movies that a consumer can watch")
+@Api(value = "/api/movies", description = "Movies that a consumer can watch")
 @RestController
 @RequestMapping(path = ["/api/movies"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
 @Validated
@@ -26,10 +26,10 @@ class MovieAPI {
 
     @ApiOperation("Create movie")
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_UTF8_VALUE])
-    @ApiResponse(code = 201, message = "Movie is presisted")
-    fun addMovie(@ApiParam("All info about movies that are created")
-                 @RequestBody
-                 DTO: MovieDTO): ResponseEntity<Long> {
+    @ApiResponse(code = 201, message = "MovieEntity is presisted")
+    fun createMovie(@ApiParam("All info about movies that are created")
+                    @RequestBody
+                    DTO: MovieDTO): ResponseEntity<Long> {
         if (!(DTO.id.isNullOrEmpty())) {
             return ResponseEntity.status(400).build()
         }
@@ -43,7 +43,7 @@ class MovieAPI {
         }
         val id: Long?
         try {
-            id = crud.addMovie(
+            id = crud.createMovie(
                     DTO.title!!,
                     DTO.director!!,
                     DTO.description!!,
@@ -131,7 +131,7 @@ class MovieAPI {
 
     @ApiOperation("Delete movie")
     @DeleteMapping(path = ["/{id}"])
-    fun deleteMovie(@ApiParam("Movie ID")
+    fun deleteMovie(@ApiParam("MovieEntity ID")
                     @PathVariable("id")
                     pathID: String?): ResponseEntity<Any> {
         val id: Long

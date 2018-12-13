@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 @Entity
-class Movie(
+class MovieEntity(
         @get:NotBlank
         var title: String,
 

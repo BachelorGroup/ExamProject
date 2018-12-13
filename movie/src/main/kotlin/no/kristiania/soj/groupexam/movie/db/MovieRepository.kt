@@ -3,16 +3,16 @@ package no.kristiania.soj.groupexam.movie.db
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 import java.time.ZonedDateTime
 import javax.persistence.EntityManager
-import javax.transaction.Transactional
 
 @Repository
-interface MovieRepository : CrudRepository<Movie, Long>, MovieRepositoryCustom
+interface MovieRepository : CrudRepository<MovieEntity, Long>, MovieRepositoryCustom
 
 @Transactional
 interface MovieRepositoryCustom {
-    fun addMovie(
+    fun createMovie(
             title: String,
             director: String,
             description: String,
@@ -38,7 +38,7 @@ class MovieRepositoryImplementation : MovieRepositoryCustom {
     @Autowired
     private lateinit var entityManager: EntityManager
 
-    override fun addMovie(
+    override fun createMovie(
             title: String,
             director: String,
             description: String,
@@ -46,7 +46,7 @@ class MovieRepositoryImplementation : MovieRepositoryCustom {
             rating: Int,
             releaseDate: ZonedDateTime
     ): Long {
-        val movie = Movie(title, director, description, info, rating, releaseDate)
+        val movie = MovieEntity(title, director, description, info, rating, releaseDate)
         entityManager.persist(movie)
         return movie.id!!
     }
@@ -60,7 +60,7 @@ class MovieRepositoryImplementation : MovieRepositoryCustom {
             rating: Int,
             releaseDate: ZonedDateTime
     ) : Boolean {
-        val movie = entityManager.find(Movie::class.java, id) ?: return false
+        val movie = entityManager.find(MovieEntity::class.java, id) ?: return false
 
         movie.title = title
         movie.director = director

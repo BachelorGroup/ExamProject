@@ -1,10 +1,10 @@
 package no.kristiania.soj.groupexam.movie.dto
 
-import no.kristiania.soj.groupexam.movie.db.Movie
+import no.kristiania.soj.groupexam.movie.db.MovieEntity
 
 object MovieConverter {
 
-    fun transform(entity: Movie): MovieDTO {
+    fun transform(entity: MovieEntity): MovieDTO {
         return MovieDTO(
                 id = entity.id?.toString(),
                 title = entity.title,
@@ -16,7 +16,7 @@ object MovieConverter {
         )
     }
 
-    fun transform(entities: Iterable<Movie>): List<MovieDTO> {
+    fun transform(entities: Iterable<MovieEntity>): List<MovieDTO> {
         return entities.map { transform(it) }
     }
 }
