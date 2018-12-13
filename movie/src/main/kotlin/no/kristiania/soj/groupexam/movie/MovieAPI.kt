@@ -1,13 +1,10 @@
-package no.kristiania.soj.groupexam.movie.api
+package no.kristiania.soj.groupexam.movie
 
 import com.google.common.base.Throwables
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
-import no.kristiania.soj.groupexam.movie.db.MovieRepository
-import no.kristiania.soj.groupexam.movie.dto.MovieConverter
-import no.kristiania.soj.groupexam.movie.dto.MovieDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -15,9 +12,9 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.ConstraintViolationException
 
-@Api(value = "/api/movies", description = "Movies that a consumer can watch")
+@Api(value = "/movie", description = "Movies that a consumer can watch")
 @RestController
-@RequestMapping(path = ["/api/movies"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
+@RequestMapping(path = ["/movie"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
 @Validated
 class MovieAPI {
 

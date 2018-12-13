@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.movie.db
+package no.kristiania.soj.groupexam.movie
 
 import java.time.ZonedDateTime
 import javax.persistence.Entity

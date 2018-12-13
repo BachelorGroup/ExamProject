@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.movie.dto
+package no.kristiania.soj.groupexam.movie
 
 import io.swagger.annotations.ApiModelProperty
 import java.time.ZonedDateTime

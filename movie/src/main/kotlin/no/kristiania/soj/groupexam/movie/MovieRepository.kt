@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.movie.db
+package no.kristiania.soj.groupexam.movie
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository

@@ -1,9 +1,7 @@
-package no.kristiania.soj.groupexam.movie.api
+package no.kristiania.soj.groupexam.movie
 
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
-import no.kristiania.soj.groupexam.movie.MovieApplication
-import no.kristiania.soj.groupexam.movie.dto.MovieDTO
 import org.hamcrest.CoreMatchers
 import org.junit.After
 import org.junit.Before
@@ -28,7 +26,7 @@ class RestTest {
     fun clean() {
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = port
-        RestAssured.basePath = "/movies"
+        RestAssured.basePath = "/movie"
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
 
         val list = RestAssured.given().accept(ContentType.JSON).get()
