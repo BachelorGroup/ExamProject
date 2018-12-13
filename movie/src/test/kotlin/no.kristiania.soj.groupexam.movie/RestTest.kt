@@ -12,10 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
+import java.time.ZonedDateTime
 
 
 @RunWith(SpringRunner::class)
-@SpringBootTest(classes = [(GroupexamApplication::class)],
+@SpringBootTest(classes = [(MovieApplication::class)],
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RestTest {
     @LocalServerPort
@@ -54,9 +55,9 @@ class RestTest {
         val description = "description"
         val info = "info"
         val rating = 4
-        val releaseDate = "release"
+        val releaseDate = ZonedDateTime.now()
 
-        val dto = MovieDTO(title, description, info, director, rating, releaseDate)
+        val dto = MovieDTO(null, title, director, description, info, rating, releaseDate)
 
         RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .get()
@@ -96,9 +97,9 @@ class RestTest {
         val description = "description"
         val info = "info"
         val rating = 4
-        val releaseDate = "release"
+        val releaseDate = ZonedDateTime.now()
 
-        val DTO = MovieDTO(title, description, info, director, rating, releaseDate)
+        val dto = MovieDTO(null, title, director, description, info, rating, releaseDate)
 
         RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .get()
@@ -107,7 +108,7 @@ class RestTest {
                 .body("size()", CoreMatchers.equalTo(0))
 
         val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .body(DTO)
+                .body(dto)
                 .post()
                 .then()
                 .statusCode(201)
@@ -118,7 +119,7 @@ class RestTest {
         val descriptionNew = "descriptionNew"
         val infoNew = "infoNew"
         val ratingNew = 3
-        val releaseDateNew = "releaseNew"
+        val releaseDateNew = ZonedDateTime.now()
 
         RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .pathParam("id", id)

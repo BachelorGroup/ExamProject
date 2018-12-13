@@ -3,6 +3,7 @@ package no.kristiania.soj.groupexam.movie.db
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
+import java.time.ZonedDateTime
 import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
@@ -17,7 +18,7 @@ interface MovieRepositoryCustom {
             description: String,
             info: String,
             rating: Int,
-            releaseDate: String
+            releaseDate: ZonedDateTime
     ) : Long
 
     fun update(
@@ -27,7 +28,7 @@ interface MovieRepositoryCustom {
             description: String,
             info: String,
             rating: Int,
-            releaseDate: String
+            releaseDate: ZonedDateTime
     ) : Boolean
 }
 
@@ -43,7 +44,7 @@ class MovieRepositoryImplementation : MovieRepositoryCustom {
             description: String,
             info: String,
             rating: Int,
-            releaseDate: String
+            releaseDate: ZonedDateTime
     ): Long {
         val movie = Movie(title, director, description, info, rating, releaseDate)
         entityManager.persist(movie)
@@ -57,7 +58,7 @@ class MovieRepositoryImplementation : MovieRepositoryCustom {
             description: String,
             info: String,
             rating: Int,
-            releaseDate: String
+            releaseDate: ZonedDateTime
     ) : Boolean {
         val movie = entityManager.find(Movie::class.java, id) ?: return false
 
