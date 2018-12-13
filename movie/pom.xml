@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>movie</name>
+    <name>groupexam</name>
     <description>Group exam project in PG6100, movie module</description>
 
     <parent>

@@ -15,9 +15,9 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.ConstraintViolationException
 
-@Api(value= "/movies", description = "movies that a consumer can watch")
+@Api(value= "/api/movies", description = "movies that a consumer can watch")
 @RestController
-@RequestMapping(path = ["/movies"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
+@RequestMapping(path = ["/api/movies"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
 @Validated
 class MovieAPI {
 
