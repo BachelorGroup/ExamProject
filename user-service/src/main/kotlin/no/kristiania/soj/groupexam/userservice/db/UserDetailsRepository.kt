@@ -1,11 +1,10 @@
-package no.kristiania.soj.groupexam.userservice
+package no.kristiania.soj.groupexam.userservice.db
 
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
 import javax.persistence.EntityManager
 
 @Repository
@@ -20,7 +19,8 @@ interface UserDetailsRepositoryCustom {
             name: String,
             surname: String,
             email: String,
-            age: Int): Boolean
+            age: Int,
+            purchasedTickets: List<Long>): Boolean
 }
 
 @Repository
@@ -35,9 +35,10 @@ class UserDetailsRepositoryImpl : UserDetailsRepositoryCustom {
             name: String,
             surname: String,
             email: String,
-            age: Int): Boolean {
+            age: Int,
+            purchasedTickets: List<Long>): Boolean {
 
-        val userDetails = UserDetailsEntity(username, name, surname, email, age)
+        val userDetails = UserDetailsEntity(username, name, surname, email, age, purchasedTickets)
         em.persist(userDetails)
         return true
     }

@@ -1,6 +1,6 @@
-package no.kristiania.soj.groupexam.userservice
+package no.kristiania.soj.groupexam.userservice.dto
 
-import no.kristiania.soj.groupexam.userservice.dto.UserDetailsDTO
+import no.kristiania.soj.groupexam.userservice.db.UserDetailsEntity
 
 class UserDetailsConverter{
 
@@ -13,7 +13,8 @@ class UserDetailsConverter{
                     name = userDetailsEntity.name,
                     surname = userDetailsEntity.surname,
                     email = userDetailsEntity.email,
-                    age = userDetailsEntity.age
+                    age = userDetailsEntity.age,
+                    purchasedTickets = userDetailsEntity.purchasedTickets
 
             )
         }

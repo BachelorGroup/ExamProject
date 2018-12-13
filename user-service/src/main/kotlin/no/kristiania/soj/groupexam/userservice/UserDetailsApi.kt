@@ -1,5 +1,8 @@
 package no.kristiania.soj.groupexam.userservice
 
+import no.kristiania.soj.groupexam.userservice.db.UserDetailsEntity
+import no.kristiania.soj.groupexam.userservice.db.UserDetailsRepository
+import no.kristiania.soj.groupexam.userservice.dto.UserDetailsConverter
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -7,6 +10,7 @@ import no.kristiania.soj.groupexam.userservice.dto.UserDetailsDTO
 import org.springframework.beans.factory.annotation.Autowired
 
 @RestController
+@RequestMapping(path = ["/api"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
 class UserDetailsApi{
 
     @Autowired
@@ -61,7 +65,7 @@ class UserDetailsApi{
         val alreadyExists = crud.existsById(id)
         var code = if(alreadyExists) 204 else 201
 
-        val entity = UserDetailsEntity(dto.username, dto.name, dto.surname, dto.email, dto.age)
+        val entity = UserDetailsEntity(dto.username, dto.name, dto.surname, dto.email, dto.age, dto.purchasedTickets)
 
         try {
             crud.save(entity)
