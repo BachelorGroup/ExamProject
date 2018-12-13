@@ -17,7 +17,7 @@ import javax.validation.ConstraintViolationException
 
 @Api(value= "/movies", description = "movies that a consumer can watch")
 @RestController
-@RequestMapping(path = ["/api/movies"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
+@RequestMapping(path = ["/movies"], produces = [MediaType.APPLICATION_JSON_UTF8_VALUE])
 @Validated
 class MovieAPI {
 
