@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
 import javax.validation.ConstraintViolationException
 
 @RestController
@@ -123,6 +124,138 @@ class MovieAPI {
             throw e
         }
 
+        return ResponseEntity.status(204).build()
+    }
+
+    @ApiOperation("Update the title")
+    @PatchMapping(path = ["/{id}/title"], consumes = [(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)])
+    fun updateTitle(@ApiParam("the title of the movie")
+                    @PathVariable("id")
+                    id: Long?, @ApiParam("the new title") title: String): ResponseEntity<Any> {
+        if (id == null) {
+            return ResponseEntity.status(400).build()
+        }
+        if (!crud.existsById(id)) {
+            return ResponseEntity.status(404).build()
+        }
+        try {
+            crud.updateTitle(id, title)
+        } catch (exception: Exception) {
+            if (Throwables.getRootCause(exception) is ConstraintViolationException) {
+                return ResponseEntity.status(400).build()
+            }
+            throw exception
+        }
+        return ResponseEntity.status(204).build()
+    }
+
+    @ApiOperation("Update the director")
+    @PatchMapping(path = ["/{id}/director"], consumes = [(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)])
+    fun updateDirector(@ApiParam("the director of the movie")
+                       @PathVariable("id")
+                       id: Long?, @ApiParam("the new director") director: String): ResponseEntity<Any> {
+        if (id == null) {
+            return ResponseEntity.status(400).build()
+        }
+        if (!crud.existsById(id)) {
+            return ResponseEntity.status(404).build()
+        }
+        try {
+            crud.updateDirector(id, director)
+        } catch (exception: Exception) {
+            if (Throwables.getRootCause(exception) is ConstraintViolationException) {
+                return ResponseEntity.status(400).build()
+            }
+            throw exception
+        }
+        return ResponseEntity.status(204).build()
+    }
+
+    @ApiOperation("Update the description")
+    @PatchMapping(path = ["/{id}/description"], consumes = [(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)])
+    fun updateDescription(@ApiParam("the description of the movie")
+                          @PathVariable("id")
+                          id: Long?, @ApiParam("the new description") description: String): ResponseEntity<Any> {
+        if (id == null) {
+            return ResponseEntity.status(400).build()
+        }
+        if (!crud.existsById(id)) {
+            return ResponseEntity.status(404).build()
+        }
+        try {
+            crud.updateDescription(id, description)
+        } catch (exception: Exception) {
+            if (Throwables.getRootCause(exception) is ConstraintViolationException) {
+                return ResponseEntity.status(400).build()
+            }
+            throw exception
+        }
+        return ResponseEntity.status(204).build()
+    }
+
+    @ApiOperation("Update the info")
+    @PatchMapping(path = ["/{id}/info"], consumes = [(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)])
+    fun updateInfo(@ApiParam("the info of the movie")
+                   @PathVariable("id")
+                   id: Long?, @ApiParam("the new info") info: String): ResponseEntity<Any> {
+        if (id == null) {
+            return ResponseEntity.status(400).build()
+        }
+        if (!crud.existsById(id)) {
+            return ResponseEntity.status(404).build()
+        }
+        try {
+            crud.updateInfo(id, info)
+        } catch (exception: Exception) {
+            if (Throwables.getRootCause(exception) is ConstraintViolationException) {
+                return ResponseEntity.status(400).build()
+            }
+            throw exception
+        }
+        return ResponseEntity.status(204).build()
+    }
+
+    @ApiOperation("Update the rating")
+    @PatchMapping(path = ["/{id}/rating"], consumes = [(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)])
+    fun updateRating(@ApiParam("the id of the movie")
+                     @PathVariable("id")
+                     id: Long?, @ApiParam("the new rating") rating: Int): ResponseEntity<Any> {
+        if (id == null) {
+            return ResponseEntity.status(400).build()
+        }
+        if (!crud.existsById(id)) {
+            return ResponseEntity.status(404).build()
+        }
+        try {
+            crud.updateRating(id, rating)
+        } catch (exception: Exception) {
+            if (Throwables.getRootCause(exception) is ConstraintViolationException) {
+                return ResponseEntity.status(400).build()
+            }
+            throw exception
+        }
+        return ResponseEntity.status(204).build()
+    }
+
+    @ApiOperation("Update the release date")
+    @PatchMapping(path = ["/{id}/releaseDate"], consumes = [(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)])
+    fun updateReleaseDate(@ApiParam("the release date of the movie")
+                          @PathVariable("id")
+                          id: Long?, @ApiParam("the new date") releaseDate: LocalDateTime): ResponseEntity<Any> {
+        if (id == null) {
+            return ResponseEntity.status(400).build()
+        }
+        if (!crud.existsById(id)) {
+            return ResponseEntity.status(404).build()
+        }
+        try {
+            crud.updateReleaseDate(id, releaseDate)
+        } catch (exception: Exception) {
+            if (Throwables.getRootCause(exception) is ConstraintViolationException) {
+                return ResponseEntity.status(400).build()
+            }
+            throw exception
+        }
         return ResponseEntity.status(204).build()
     }
 

@@ -58,8 +58,7 @@ class MovieApiTest {
         val description = "description"
         val info = "info"
         val rating = 4
-        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10)
-        val formattedDate = releaseDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
 
         val dto = MovieDTO(title, director, description, info, rating, releaseDate)
 
@@ -91,7 +90,7 @@ class MovieApiTest {
                 .body("description", CoreMatchers.equalTo(description))
                 .body("info", CoreMatchers.equalTo(info))
                 .body("rating", CoreMatchers.equalTo(rating))
-                .body("releaseDate", CoreMatchers.equalTo(formattedDate))
+                .body("releaseDate", CoreMatchers.equalTo("2018-04-20T10:10:00"))
                 .body("id", CoreMatchers.equalTo(id))
     }
 
@@ -103,7 +102,6 @@ class MovieApiTest {
         val info = "info"
         val rating = 4
         val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
-        val formattedDate = releaseDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
 
         val dto = MovieDTO(title, director, description, info, rating, releaseDate)
@@ -121,7 +119,6 @@ class MovieApiTest {
         val infoNew = "infoNew"
         val ratingNew = 3
         val releaseDateNew = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10)
-        val formattedDateNew = releaseDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 
         RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .pathParam("id", id)
@@ -145,9 +142,262 @@ class MovieApiTest {
                 .body("title", CoreMatchers.equalTo(titleNew))
                 .body("director", CoreMatchers.equalTo(directorNew))
                 .body("description", CoreMatchers.equalTo(descriptionNew))
-                .body("info", CoreMatchers.equalTo(infoNew))
+                .body("info", CoreMatchers.equalTo(info))
                 .body("rating", CoreMatchers.equalTo(ratingNew))
-                .body("releaseDate", CoreMatchers.equalTo(releaseDateNew))
+                .body("releaseDate", CoreMatchers.equalTo("2018-04-20T10:10:00"))
+                .body("id", CoreMatchers.equalTo(id))
+    }
+
+    @Test
+    fun testUpdateTitle() {
+        val title = "title"
+        val director = "director"
+        val description = "description"
+        val info = "info"
+        val rating = 4
+        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
+
+
+        val dto = MovieDTO(title, director, description, info, rating, releaseDate)
+
+        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().asString()
+
+        val titleNew = "titleNew"
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .param("title", titleNew)
+                .patch("/{id}/title")
+                .then()
+                .statusCode(204)
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .get("/{id}")
+                .then()
+                .statusCode(200)
+                .body("title", CoreMatchers.equalTo(titleNew))
+                .body("director", CoreMatchers.equalTo(director))
+                .body("description", CoreMatchers.equalTo(description))
+                .body("info", CoreMatchers.equalTo(info))
+                .body("rating", CoreMatchers.equalTo(rating))
+                .body("releaseDate", CoreMatchers.equalTo("2018-04-20T10:10:00"))
+                .body("id", CoreMatchers.equalTo(id))
+    }
+
+    @Test
+    fun testUpdateDirector() {
+        val title = "title"
+        val director = "director"
+        val description = "description"
+        val info = "info"
+        val rating = 4
+        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
+
+
+        val dto = MovieDTO(title, director, description, info, rating, releaseDate)
+
+        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().asString()
+
+        val directorNew = "directorNew"
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .param("director", directorNew)
+                .patch("/{id}/director")
+                .then()
+                .statusCode(204)
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .get("/{id}")
+                .then()
+                .statusCode(200)
+                .body("title", CoreMatchers.equalTo(title))
+                .body("director", CoreMatchers.equalTo(directorNew))
+                .body("description", CoreMatchers.equalTo(description))
+                .body("info", CoreMatchers.equalTo(info))
+                .body("rating", CoreMatchers.equalTo(rating))
+                .body("releaseDate", CoreMatchers.equalTo("2018-04-20T10:10:00"))
+                .body("id", CoreMatchers.equalTo(id))
+    }
+
+    @Test
+    fun testUpdateDescription() {
+        val title = "title"
+        val director = "director"
+        val description = "description"
+        val info = "info"
+        val rating = 4
+        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
+
+
+        val dto = MovieDTO(title, director, description, info, rating, releaseDate)
+
+        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().asString()
+
+        val descriptionNew = "descriptionNew"
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .param("description", descriptionNew)
+                .patch("/{id}/description")
+                .then()
+                .statusCode(204)
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .get("/{id}")
+                .then()
+                .statusCode(200)
+                .body("title", CoreMatchers.equalTo(title))
+                .body("director", CoreMatchers.equalTo(director))
+                .body("description", CoreMatchers.equalTo(descriptionNew))
+                .body("info", CoreMatchers.equalTo(info))
+                .body("rating", CoreMatchers.equalTo(rating))
+                .body("releaseDate", CoreMatchers.equalTo("2018-04-20T10:10:00"))
+                .body("id", CoreMatchers.equalTo(id))
+    }
+
+    @Test
+    fun testUpdateInfo() {
+        val title = "title"
+        val director = "director"
+        val description = "description"
+        val info = "info"
+        val rating = 4
+        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
+
+
+        val dto = MovieDTO(title, director, description, info, rating, releaseDate)
+
+        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().asString()
+
+        val infoNew = "infoNew"
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .param("info", infoNew)
+                .patch("/{id}/info")
+                .then()
+                .statusCode(204)
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .get("/{id}")
+                .then()
+                .statusCode(200)
+                .body("title", CoreMatchers.equalTo(title))
+                .body("director", CoreMatchers.equalTo(director))
+                .body("description", CoreMatchers.equalTo(description))
+                .body("info", CoreMatchers.equalTo(infoNew))
+                .body("rating", CoreMatchers.equalTo(rating))
+                .body("releaseDate", CoreMatchers.equalTo("2018-04-20T10:10:00"))
+                .body("id", CoreMatchers.equalTo(id))
+    }
+
+    @Test
+    fun testUpdateRating() {
+        val title = "title"
+        val director = "director"
+        val description = "description"
+        val info = "info"
+        val rating = 4
+        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
+
+
+        val dto = MovieDTO(title, director, description, info, rating, releaseDate)
+
+        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().asString()
+
+        val ratingNew = 5
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .param("rating", ratingNew)
+                .patch("/{id}/rating")
+                .then()
+                .statusCode(204)
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .get("/{id}")
+                .then()
+                .statusCode(200)
+                .body("title", CoreMatchers.equalTo(title))
+                .body("director", CoreMatchers.equalTo(director))
+                .body("description", CoreMatchers.equalTo(description))
+                .body("info", CoreMatchers.equalTo(info))
+                .body("rating", CoreMatchers.equalTo(ratingNew))
+                .body("releaseDate", CoreMatchers.equalTo("2018-04-20T10:10:00"))
+                .body("id", CoreMatchers.equalTo(id))
+    }
+
+    @Test
+    fun testUpdateReleaseDate() {
+        val title = "title"
+        val director = "director"
+        val description = "description"
+        val info = "info"
+        val rating = 4
+        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
+
+
+        val dto = MovieDTO(title, director, description, info, rating, releaseDate)
+
+        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().asString()
+
+        val releaseDateNew = LocalDateTime.of(2016, Month.OCTOBER, 20, 10, 10, 0)
+
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .param("releaseDate", releaseDateNew)
+                .patch("/{id}/releaseDate")
+                .then()
+                .statusCode(204)
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id)
+                .get("/{id}")
+                .then()
+                .statusCode(200)
+                .body("title", CoreMatchers.equalTo(title))
+                .body("director", CoreMatchers.equalTo(director))
+                .body("description", CoreMatchers.equalTo(description))
+                .body("info", CoreMatchers.equalTo(info))
+                .body("rating", CoreMatchers.equalTo(rating))
+                .body("releaseDate", CoreMatchers.equalTo("2016-10-20T10:10:00"))
                 .body("id", CoreMatchers.equalTo(id))
     }
 }
