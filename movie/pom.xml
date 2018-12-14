@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>groupexam</name>
+    <name>movie</name>
     <description>Group exam project in PG6100, movie module</description>
 
     <parent>
@@ -29,18 +29,6 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>no.kristiania.soj</groupId>
-            <artifactId>groupexam</artifactId>
-        </dependency>
-
-
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <version>${version.springcloud}</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -140,11 +128,6 @@
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
     </dependencies>
@@ -154,7 +137,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Finchley.SR1</version>
+                <version>${version.springcloud}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
