@@ -1,6 +1,8 @@
 # ExamProject
 
-This is the group project for the 6100 Enterprise 2 exam, by the group SOJ
+This is the group project for the 6100 Enterprise 2 exam, by the group SOJ.
+The exam has been completed with the goal of using swagger, REST api's and RestAssured.
+
 
 ## Welcome to our exam project
 
