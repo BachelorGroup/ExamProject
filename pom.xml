@@ -6,7 +6,7 @@
 	<groupId>no.kristiania.soj</groupId>
 	<artifactId>groupexam</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<name>groupexam</name>
 	<description>Group exam project in PG6100</description>
@@ -20,10 +20,10 @@
 
 	<modules>
 		<module>auth</module>
-		<module>user-service</module>
-		<module>user-service-dto</module>
 		<module>ticket</module>
 		<module>eureka</module>
+		<module>scg</module>
+		<module>movie</module>
 	</modules>
 
 	<properties>
@@ -31,18 +31,14 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<version.java>1.8</version.java>
 		<version.kotlin>1.2.70</version.kotlin>
-		<version.springcloud>Finchley.SR1</version.springcloud>
+		<version.springcloud>Finchley.RELEASE</version.springcloud>
 		<version.springfox>2.9.2</version.springfox>
+		<version.springboot>2.1.1.RELEASE</version.springboot>
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
 		<version.testcontainers>1.9.1</version.testcontainers>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dependencies</artifactId>
-			<version>${version.springcloud}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -145,6 +141,18 @@
 			<artifactId>testcontainers</artifactId>
 			<version>${version.testcontainers}</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
+			<version>1.4.6.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<version>2.0.2.RELEASE</version>
 		</dependency>
 	</dependencies>
 
