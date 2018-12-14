@@ -1,6 +1,5 @@
-package no.kristiania.soj.groupexam.userservice
+package no.kristiania.soj.groupexam.userservice.db
 
-import java.time.LocalDateTime
 import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
@@ -27,21 +26,10 @@ class UserDetailsEntity(
         var email: String?,
 
         @get:NotNull
-        var age: Int?
+        var age: Int?,
 
-        /*
-            userOwner is a manyToOne field in TicketEntity which is
-            the username of the owner of the ticket
-
-            fetch type is default lazy
-        */
-        /*
-        @get:NotBlank
-        @get:OneToMany(mappedBy = "userOwner")
-        var purchasedTickets: List<TicketEntity>
-
-        ????
-*/
+        @get:ElementCollection
+        var purchasedTickets: MutableList<Long>? = mutableListOf()
 
 
 )
