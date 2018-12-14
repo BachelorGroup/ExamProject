@@ -3,7 +3,6 @@ package no.kristiania.soj.groupexam.movie.api
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
 import no.kristiania.soj.groupexam.movie.MovieApplication
-import no.kristiania.soj.groupexam.movie.db.MovieEntity
 import no.kristiania.soj.groupexam.movie.dto.MovieDTO
 import org.hamcrest.CoreMatchers
 import org.junit.After
@@ -15,7 +14,6 @@ import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import java.time.*
-import java.time.format.DateTimeFormatter
 
 
 @RunWith(SpringRunner::class)
@@ -417,9 +415,9 @@ class MovieApiTest {
 
     @Test
     fun testNull() {
-        val dto = MovieDTO(null, null, null, null, null, null)
-
-        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+        val dto = MovieDTO()
+        dto.id = "nothing"
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .body(dto)
                 .post()
                 .then()
@@ -498,6 +496,63 @@ class MovieApiTest {
     }
 
     @Test
+    fun testIllegalPatch() {
+        val dto = MovieDTO()
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", "Nothing")
+                .body(MovieDTO(
+                        title = dto.title,
+                        director = dto.director,
+                        description = dto.description,
+                        info = dto.info,
+                        rating = dto.rating,
+                        releaseDate = dto.releaseDate,
+                        id = dto.id))
+                .put("/{id}")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
+    fun testNotMatching(){
+        val dto = MovieDTO()
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", "1")
+                .body(MovieDTO(
+                        title = dto.title,
+                        director = dto.director,
+                        description = dto.description,
+                        info = dto.info,
+                        rating = dto.rating,
+                        releaseDate = dto.releaseDate,
+                        id = "2"))
+                .put("/{id}")
+                .then()
+                .statusCode(409)
+    }
+
+    @Test
+    fun testIllegalPut() {
+        val dto = MovieDTO()
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", "1")
+                .body(MovieDTO(
+                        title = dto.title,
+                        director = dto.director,
+                        description = dto.description,
+                        info = dto.info,
+                        rating = dto.rating,
+                        releaseDate = dto.releaseDate,
+                        id = "1"))
+                .put("/{id}")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
     fun testEmptyMovie() {
         val dto = MovieDTO()
         dto.info = null
@@ -555,7 +610,7 @@ class MovieApiTest {
                 .body("size()", CoreMatchers.equalTo(0))
 
         RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .pathParam("id", "2")
+                .pathParam("id", "noID")
                 .get("/{id}")
                 .then()
                 .statusCode(404)
