@@ -62,18 +62,23 @@ class TicketApiTests {
                 .body("size()", CoreMatchers.equalTo(0))
     }
 
-    @Test
-    fun testCreateAndGet() {
+    private fun createTicket(): TicketDTO {
 
         val cinema = "Colosseum"
         val hall = 1
         val seatRow = 5
         val seatColumn = 7
         val movieTitle = "Monsters INC"
-        val movieDateTime = LocalDateTime.of(2018, Month.OCTOBER, 24, 18, 2)
-        val expectedTime = movieDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        val movieDateTime = LocalDateTime.of(2018, Month.OCTOBER, 24, 18, 2, 0)
 
-        val dto = TicketDTO(cinema, hall, seatRow, seatColumn, movieTitle, movieDateTime)
+        return TicketDTO(cinema, hall, seatRow, seatColumn, movieTitle, movieDateTime)
+    }
+
+    @Test
+    fun testCreateAndGet() {
+
+        val dto = createTicket()
+        val expectedTime = dto.movieDateTime?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 
         //Should be no tickets
         RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -104,27 +109,72 @@ class TicketApiTests {
                 .then()
                 .statusCode(200)
                 .body("ticketId", CoreMatchers.equalTo(id))
-                .body("cinema", CoreMatchers.equalTo(cinema))
-                .body("seatRow", CoreMatchers.equalTo(seatRow))
-                .body("seatColumn", CoreMatchers.equalTo(seatColumn))
-                .body("movieTitle", CoreMatchers.equalTo(movieTitle))
+                .body("cinema", CoreMatchers.equalTo(dto.cinema))
+                .body("seatRow", CoreMatchers.equalTo(dto.seatRow))
+                .body("seatColumn", CoreMatchers.equalTo(dto.seatColumn))
+                .body("movieTitle", CoreMatchers.equalTo(dto.movieTitle))
                 .body("movieDateTime", CoreMatchers.equalTo(expectedTime))
+    }
+
+    @Test
+    fun testInvalidPostId() {
+
+        val dto = createTicket()
+        dto.ticketId = "1"
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(400)
+    }
+
+    @Test
+    fun testNullPost() {
+
+        val dto = createTicket()
+
+        dto.cinema = null
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(400)
+    }
+
+    @Test
+    fun testInvalidGetId() {
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("ticketId", "Invalid")
+                .get("/{ticketId}")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
+    fun testNonExistingGetId() {
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("size()", CoreMatchers.equalTo(0))
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("ticketId", 1)
+                .get("/{ticketId}")
+                .then()
+                .statusCode(404)
     }
 
     @Test
     fun testUpdateTicket() {
 
-        val cinema = "Colosseum"
-        val hall = 1
-        val seatRow = 5
-        val seatColumn = 7
-        val movieTitle = "Monsters INC"
-        val movieDateTime = LocalDateTime.of(2018, Month.OCTOBER, 24, 18, 2, 0)
-        val expectedTime = movieDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        val dto = createTicket()
+        val expectedTime = dto.movieDateTime?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 
-        val dto = TicketDTO(cinema, hall, seatRow, seatColumn, movieTitle, movieDateTime)
-
-        //Creating a ticket
         val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .body(dto)
                 .post()
@@ -137,12 +187,12 @@ class TicketApiTests {
         RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .pathParam("ticketId", id)
                 .body(TicketDTO(
-                        cinema = cinema,
-                        hall = hall,
-                        seatRow = seatRow,
-                        seatColumn = seatColumn,
+                        cinema = dto.cinema,
+                        hall = dto.hall,
+                        seatRow = dto.seatRow,
+                        seatColumn = dto.seatColumn,
                         movieTitle = updatedMovieTitle,
-                        movieDateTime = movieDateTime,
+                        movieDateTime = dto.movieDateTime,
                         ticketId = id))
                 .put("/{ticketId}")
                 .then()
@@ -155,25 +205,112 @@ class TicketApiTests {
                 .then()
                 .statusCode(200)
                 .body("ticketId", CoreMatchers.equalTo(id))
-                .body("cinema", CoreMatchers.equalTo(cinema))
-                .body("seatRow", CoreMatchers.equalTo(seatRow))
-                .body("seatColumn", CoreMatchers.equalTo(seatColumn))
+                .body("cinema", CoreMatchers.equalTo(dto.cinema))
+                .body("seatRow", CoreMatchers.equalTo(dto.seatRow))
+                .body("seatColumn", CoreMatchers.equalTo(dto.seatColumn))
                 .body("movieTitle", CoreMatchers.equalTo(updatedMovieTitle))
                 .body("movieDateTime", CoreMatchers.equalTo(expectedTime))
     }
 
     @Test
+    fun testInvalidPutId() {
+
+        val dto = createTicket()
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("ticketId", 1)
+                .body(TicketDTO(
+                        cinema = dto.cinema,
+                        hall = dto.hall,
+                        seatRow = dto.seatRow,
+                        seatColumn = dto.seatColumn,
+                        movieTitle = dto.movieTitle,
+                        movieDateTime = dto.movieDateTime,
+                        ticketId = null))
+                .put("/{ticketId}")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
+    fun testMismatchPutId() {
+
+        val dto = createTicket()
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("ticketId", 1)
+                .body(TicketDTO(
+                        cinema = dto.cinema,
+                        hall = dto.hall,
+                        seatRow = dto.seatRow,
+                        seatColumn = dto.seatColumn,
+                        movieTitle = dto.movieTitle,
+                        movieDateTime = dto.movieDateTime,
+                        ticketId = "2"))
+                .put("/{ticketId}")
+                .then()
+                .statusCode(409)
+    }
+
+    @Test
+    fun testNonExistingPutId() {
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("size()", CoreMatchers.equalTo(0))
+
+        val dto = createTicket()
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("ticketId", 1)
+                .body(TicketDTO(
+                        cinema = dto.cinema,
+                        hall = dto.hall,
+                        seatRow = dto.seatRow,
+                        seatColumn = dto.seatColumn,
+                        movieTitle = dto.movieTitle,
+                        movieDateTime = dto.movieDateTime,
+                        ticketId = "1"))
+                .put("/{ticketId}")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
+    fun testNullPut() {
+
+        val dto = createTicket()
+
+        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().asString()
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("ticketId", id)
+                .body(TicketDTO(
+                        cinema = null,
+                        hall = null,
+                        seatRow = null,
+                        seatColumn = null,
+                        movieTitle = null,
+                        movieDateTime = null,
+                        ticketId = id))
+                .put("/{ticketId}")
+                .then()
+                .statusCode(400)
+    }
+
+    @Test
     fun testUpdateSeat() {
 
-        val cinema = "Colosseum"
-        val hall = 1
-        val seatRow = 5
-        val seatColumn = 7
-        val movieTitle = "Monsters INC"
-        val movieDateTime = LocalDateTime.of(2018, Month.OCTOBER, 24, 18, 2, 0)
-        val expectedTime = movieDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        val dto = createTicket()
+        val expectedTime = dto.movieDateTime?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 
-        val dto = TicketDTO(cinema, hall, seatRow, seatColumn, movieTitle, movieDateTime)
 
         //Creating a ticket
         val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -201,10 +338,100 @@ class TicketApiTests {
                 .then()
                 .statusCode(200)
                 .body("ticketId", CoreMatchers.equalTo(id))
-                .body("cinema", CoreMatchers.equalTo(cinema))
+                .body("cinema", CoreMatchers.equalTo(dto.cinema))
                 .body("seatRow", CoreMatchers.equalTo(updatedRow))
                 .body("seatColumn", CoreMatchers.equalTo(updatedColumn))
-                .body("movieTitle", CoreMatchers.equalTo(movieTitle))
+                .body("movieTitle", CoreMatchers.equalTo(dto.movieTitle))
                 .body("movieDateTime", CoreMatchers.equalTo(expectedTime))
+    }
+
+    @Test
+    fun testInvalidPatchId() {
+
+        val updatedRow = 2
+        val updatedColumn = 3
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("ticketId", "random")
+                .param("seatRow", updatedRow)
+                .param("seatColumn", updatedColumn)
+                .patch("/{ticketId}/seat")
+                .then()
+                .statusCode(400)
+    }
+
+    @Test
+    fun testNonExistingPatchId() {
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("size()", CoreMatchers.equalTo(0))
+
+        val updatedRow = 2
+        val updatedColumn = 3
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("ticketId", 1)
+                .param("seatRow", updatedRow)
+                .param("seatColumn", updatedColumn)
+                .patch("/{ticketId}/seat")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
+    fun testDeleteTicket() {
+
+        val dto = createTicket()
+
+        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().asString()
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("size()", CoreMatchers.equalTo(1))
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .delete("/${id}")
+                .then()
+                .statusCode(204)
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("size()", CoreMatchers.equalTo(0))
+    }
+
+    @Test
+    fun testInvalidDeleteId() {
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .delete("Invalid")
+                .then()
+                .statusCode(400)
+    }
+
+    @Test
+    fun testNonExistingDeleteId() {
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("size()", CoreMatchers.equalTo(0))
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .delete("1")
+                .then()
+                .statusCode(404)
     }
 }

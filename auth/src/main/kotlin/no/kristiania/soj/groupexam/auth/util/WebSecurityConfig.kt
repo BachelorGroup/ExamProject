@@ -53,6 +53,8 @@ class WebSecurityConfig/*(
                     whitelisting: deny everything by default,
                     unless it was explicitly allowed in the rules
                     above.
+
+                    for simplicity we let admin have rights to everything
                  */
                 .anyRequest().hasRole("ADMIN")
                 .and()

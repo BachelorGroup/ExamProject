@@ -8,15 +8,21 @@ spring:
       - id: auth-service
         uri: lb://auth-service
         predicates:
-        - Path=/auth-service/**
+        - Path=/auth/**
         filters:
-        - RewritePath=/employee/(?<path>.*), /$\{path}
+        - RewritePath=/auth/(?<path>.*), /$\{path}
       - id: ticket-producer
-        uri: lb://ticket-producer
+        uri: lb://ticket-service
         predicates:
-        - Path=/ticket-producer/**
+        - Path=/ticket/**
         filters:
-        - RewritePath=/employee/(?<path>.*), /$\{path}
+        - RewritePath=/ticket/(?<path>.*), /$\{path}
+      - id: movie-producer
+        uri: lb://movie-service
+        predicates:
+        - Path=/movie/**
+        filters:
+        - RewritePath=/movie/(?<path>.*), /$\{path}
 
 eureka:
   instance:

@@ -1,4 +1,4 @@
-package no.kristiania.soj.groupexam.userservice
+/*package no.kristiania.soj.groupexam.userservice
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails
 @EnableWebSecurity
 class WebSecurityConfig: WebSecurityConfigurerAdapter() {
 
-
+*//*
     override fun configure(http: HttpSecurity) {
 
         http
@@ -22,14 +22,12 @@ class WebSecurityConfig: WebSecurityConfigurerAdapter() {
                 .authorizeRequests()
                 .antMatchers("/userDetailsCount").permitAll()
                 .antMatchers("/userDetails").hasRole("ADMIN")
-                //
                 .antMatchers("/userDetails/{id}/**")
-                /*
+                *//*
                     the "#" resolves the variable in the path, "{id}" in this case.
                     the "@" resolves a current bean.
-                  */
+                  *//*
                 .access("hasRole('USER') and @userSecurity.checkId(authentication, #id)")
-                //
                 .anyRequest().denyAll()
                 .and()
                 .csrf().disable()
@@ -42,12 +40,13 @@ class WebSecurityConfig: WebSecurityConfigurerAdapter() {
         return UserSecurity()
     }
 }
-
+*/
 /**
  * Custom check. Not only we need a user authenticated, but we also
  * need to make sure that a user can only access his/her data, and not the
  * one of the other users
  */
+
 class UserSecurity{
 
     fun checkId(authentication: Authentication, id: String) : Boolean{
@@ -57,5 +56,5 @@ class UserSecurity{
         return current == id
     }
 }
-
+*/
 
