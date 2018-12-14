@@ -29,7 +29,7 @@ class UserDetailsEntity(
         var age: Int?,
 
         @get:ElementCollection
-        var purchasedTickets: List<Long>?
+        var purchasedTickets: MutableList<Long>? = mutableListOf()
 
 
 )

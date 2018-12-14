@@ -29,5 +29,5 @@ class UserDetailsDTO(
 
         @ApiModelProperty("Age of user")
         @get:NotNull
-        var purchasedTickets: List<Long>? = null
+        var purchasedTickets: MutableList<Long>? = null
 )

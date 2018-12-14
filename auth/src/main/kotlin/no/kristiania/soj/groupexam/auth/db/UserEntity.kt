@@ -20,7 +20,7 @@ class UserEntity(
 
         @get:ElementCollection(fetch = FetchType.EAGER)
         @get:NotNull
-        var roles: MutableSet<String>?,
+        var roles: MutableSet<String>? = mutableSetOf(),
 
         @get:NotNull
         var enabled: Boolean? = true

@@ -13,8 +13,8 @@ class WebSecurityConfig : org.springframework.security.config.annotation.web.con
                 .antMatchers("/api/userDetailsCount").permitAll()
                 .antMatchers("/api/userDetails").hasRole("ADMIN")
 
-                .antMatchers("/usersInfo/{id}/**")
-                .hasRole("ADMIN")
+                .antMatchers("/api/userDetails/{id}/**")
+                .hasAnyRole("USER", "ADMIN")
                 /*
                     the "#" resolves the variable in the path, "{id}" in this case.
                     the "@" resolves a current bean.

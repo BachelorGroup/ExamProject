@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 
 @Repository
-interface UserDetailsRepository : CrudRepository<UserDetailsEntity, String> {
+interface UserDetailsRepository : CrudRepository<UserDetailsEntity, String>, UserDetailsRepositoryCustom {
 }
 
 @Transactional
@@ -20,7 +20,9 @@ interface UserDetailsRepositoryCustom {
             surname: String,
             email: String,
             age: Int,
-            purchasedTickets: List<Long>): Boolean
+            purchasedTickets: MutableList<Long>): Boolean
+
+    fun updateEmail(username: String, email: String): Boolean
 }
 
 @Repository
@@ -36,10 +38,16 @@ class UserDetailsRepositoryImpl : UserDetailsRepositoryCustom {
             surname: String,
             email: String,
             age: Int,
-            purchasedTickets: List<Long>): Boolean {
+            purchasedTickets: MutableList<Long>): Boolean {
 
         val userDetails = UserDetailsEntity(username, name, surname, email, age, purchasedTickets)
         em.persist(userDetails)
+        return true
+    }
+
+    override fun updateEmail(username: String, email: String): Boolean{
+        val userDetails = em.find(UserDetailsEntity::class.java, username) ?: return false
+        userDetails.email = email
         return true
     }
 }
