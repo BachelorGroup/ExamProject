@@ -37,11 +37,7 @@ class TicketApi {
             return ResponseEntity.status(400).build()
         }
 
-        if (dto.purchaseDateTime != null) {
-            return ResponseEntity.status(400).build()
-        }
-
-        if (dto.cinema == null || dto.hall == null || dto.seatRow == null || dto.seatColumn == null || dto.movieTitle == null ||  dto.movieDateTime == null) {
+        if (dto.purchaseDateTime != null || dto.cinema == null || dto.hall == null || dto.seatRow == null || dto.seatColumn == null || dto.movieTitle == null ||  dto.movieDateTime == null) {
             return ResponseEntity.status(400).build()
         }
 
@@ -143,13 +139,16 @@ class TicketApi {
     fun updateSeat(
             @ApiParam("The id of the ticket")
             @PathVariable("id")
-            id: Long?,
+            pathId: String?,
             @ApiParam("The new row") seatRow: Int,
             @ApiParam("The new seat") seatColumn: Int
 
     ): ResponseEntity<Any> {
 
-        if (id == null) {
+        val id: Long
+        try {
+            id = pathId!!.toLong()
+        } catch (e: Exception) {
             return ResponseEntity.status(400).build()
         }
 
