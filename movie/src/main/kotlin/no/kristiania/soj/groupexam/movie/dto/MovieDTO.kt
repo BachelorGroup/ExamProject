@@ -2,6 +2,7 @@ package no.kristiania.soj.groupexam.movie.dto
 
 import io.swagger.annotations.ApiModelProperty
 import java.time.LocalDateTime
+import javax.validation.constraints.Max
 
 data class MovieDTO(
 
@@ -18,6 +19,7 @@ data class MovieDTO(
         var info: String? = null,
 
         @ApiModelProperty("Rating of the movie, out of 5 stars")
+        @Max(5)
         var rating: Int? = null,
 
         @ApiModelProperty("The release date of the movie")
