@@ -134,7 +134,7 @@ class UserApi(
                 pathId: String?)
             : ResponseEntity<WrappedResponse<UserDTO>> {
 
-        val user = userCrud.findById(pathId).orElse(null)
+        val user = userCrud.findById(pathId!!).orElse(null)
                 ?: return RestResponseFactory.notFound(
                 "The requested user with username '$pathId' is not in the database")
 
@@ -148,7 +148,7 @@ class UserApi(
                @PathVariable("username")
                pathId: String?): ResponseEntity<WrappedResponse<Void>> {
 
-        if (!userCrud.existsById(pathId)) {
+        if (!userCrud.existsById(pathId!!)) {
             return RestResponseFactory.notFound(
                     "The requested user with username '$pathId' is not in the database")
         }

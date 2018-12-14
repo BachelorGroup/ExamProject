@@ -363,4 +363,30 @@ class UserApiTests {
                 .then()
                 .statusCode(200)
     }
+
+    @Test
+    fun testCorrectXValue(){
+
+        val x = "1"
+
+        RestAssured.given()
+                .auth().basic(adminId, adminId)
+                .param("x", x)
+                .get("/test")
+                .then()
+                .statusCode(200)
+    }
+
+    @Test
+    fun testWrongXValue(){
+
+        val x = "2"
+
+        RestAssured.given()
+                .auth().basic(adminId, adminId)
+                .param("x", x)
+                .get("/test")
+                .then()
+                .statusCode(400)
+    }
 }

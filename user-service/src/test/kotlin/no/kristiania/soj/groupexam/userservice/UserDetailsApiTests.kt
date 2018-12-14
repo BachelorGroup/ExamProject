@@ -96,6 +96,20 @@ class UserDetailsApiTests {
     }
 
     @Test
+    fun testGetIdNotFound(){
+
+        checkSize(0)
+
+        val id = "foo"
+
+        RestAssured.given().auth().basic(id, "bar")
+                .contentType(ContentType.JSON)
+                .get("/userDetails/thisIsNotAUserNameThatExists")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
     fun testChangeField(){
 
         checkSize(0)
@@ -157,7 +171,7 @@ class UserDetailsApiTests {
         RestAssured.given().auth().basic(id, "bar")
                 .contentType(ContentType.JSON)
                 .param("email", changed)
-                .patch("/userDetails/$id/email")
+                .patch("/userDetails/$id")
                 .then()
                 .statusCode(204)
 
@@ -196,5 +210,50 @@ class UserDetailsApiTests {
                 .statusCode(204)
 
         checkSize(0)
+    }
+
+    @Test
+    fun testDeleteUserNotExists(){
+        checkSize(0)
+
+        val id = "foo"
+
+        RestAssured.given().auth().basic(id, "bar")
+                .contentType(ContentType.JSON)
+                .delete("/userDetails/$id")
+                .then()
+                .statusCode(404)
+
+        checkSize(0)
+    }
+
+    @Test
+    fun testUpdateEmailNoParam(){
+
+        checkSize(0)
+
+        val id = "foo"
+        val email = "e@email.com"
+
+        val dto = UserDetailsDTO(id, "seub", "kun", email, 21, null)
+
+        RestAssured.given().auth().basic(id, "bar")
+                .contentType(ContentType.JSON)
+                .body(dto)
+                .put("/userDetails/$id")
+                .then()
+                .statusCode(201)
+
+        checkSize(1)
+
+        val blank =  ""
+        dto.email = blank
+
+        RestAssured.given().auth().basic(id, "bar")
+                .contentType(ContentType.JSON)
+                .param("email", blank)
+                .patch("/userDetails/$id")
+                .then()
+                .statusCode(400)
     }
 }

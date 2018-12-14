@@ -80,7 +80,7 @@ class UserDetailsApi{
     }
 
     @ApiOperation("Update the email")
-    @PatchMapping(path = ["userDetails/{id}/email"], consumes = [(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)])
+    @PatchMapping(path = ["userDetails/{id}"], consumes = [(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)])
     fun updateEmail(@ApiParam("the username of a user")
                    @PathVariable("id")
                    id: String?, @ApiParam("the new email") email: String): ResponseEntity<Any> {
@@ -104,7 +104,7 @@ class UserDetailsApi{
                          @PathVariable("id")
                          pathId: String?): ResponseEntity<Any> {
 
-        if (!crud.existsById(pathId)) {
+        if (!crud.existsById(pathId!!)) {
             return ResponseEntity.status(404).build()
         }
 
