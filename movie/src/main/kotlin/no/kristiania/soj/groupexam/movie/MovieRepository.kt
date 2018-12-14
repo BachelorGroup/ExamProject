@@ -42,7 +42,7 @@ interface MovieRepositoryCustom {
 
     fun updateInfo(id: Long, info: String): Boolean
 
-    fun updateReleaseDate(id: Long, releaseDate: LocalDateTime): Boolean
+//    fun updateReleaseDate(id: Long, releaseDate: LocalDateTime): Boolean
 }
 
 @Repository
@@ -104,9 +104,9 @@ class MovieRepositoryImpl : MovieRepositoryCustom {
         return true
     }
 
-    override fun updateReleaseDate(id: Long, releaseDate: LocalDateTime): Boolean {
-        val movie = entityManager.find(MovieEntity::class.java, id) ?: return false
-        movie.releaseDate = releaseDate
-        return true
-    }
+//    override fun updateReleaseDate(id: Long, releaseDate: LocalDateTime): Boolean {
+//        val movie = entityManager.find(MovieEntity::class.java, id) ?: return false
+//        movie.releaseDate = releaseDate
+//        return true
+//    }
 }

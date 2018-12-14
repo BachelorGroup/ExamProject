@@ -237,27 +237,27 @@ class MovieAPI {
         return ResponseEntity.status(204).build()
     }
 
-    @ApiOperation("Update the release date")
-    @PatchMapping(path = ["/{id}/releaseDate"], consumes = [(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)])
-    fun updateReleaseDate(@ApiParam("the release date of the movie")
-                          @PathVariable("id")
-                          id: Long?, @ApiParam("the new date") releaseDate: LocalDateTime): ResponseEntity<Any> {
-        if (id == null) {
-            return ResponseEntity.status(400).build()
-        }
-        if (!crud.existsById(id)) {
-            return ResponseEntity.status(404).build()
-        }
-        try {
-            crud.updateReleaseDate(id, releaseDate)
-        } catch (exception: Exception) {
-            if (Throwables.getRootCause(exception) is ConstraintViolationException) {
-                return ResponseEntity.status(400).build()
-            }
-            throw exception
-        }
-        return ResponseEntity.status(204).build()
-    }
+//    @ApiOperation("Update the release date")
+//    @PatchMapping(path = ["/{id}/releaseDate"], consumes = [(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)])
+//    fun updateReleaseDate(@ApiParam("the release date of the movie")
+//                          @PathVariable("id")
+//                          id: Long?, @ApiParam("the new date") releaseDate: LocalDateTime): ResponseEntity<Any> {
+//        if (id == null) {
+//            return ResponseEntity.status(400).build()
+//        }
+//        if (!crud.existsById(id)) {
+//            return ResponseEntity.status(404).build()
+//        }
+//        try {
+//            crud.updateReleaseDate(id, releaseDate)
+//        } catch (exception: Exception) {
+//            if (Throwables.getRootCause(exception) is ConstraintViolationException) {
+//                return ResponseEntity.status(400).build()
+//            }
+//            throw exception
+//        }
+//        return ResponseEntity.status(204).build()
+//    }
 
     @ApiOperation("Delete movie")
     @DeleteMapping(path = ["/{id}"])
