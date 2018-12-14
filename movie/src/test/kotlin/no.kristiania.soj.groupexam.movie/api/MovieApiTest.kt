@@ -454,7 +454,7 @@ class MovieApiTest {
     @Test
     fun testDeleteNoMovie() {
         RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .delete("Invalid")
+                .delete("nothing")
                 .then()
                 .statusCode(400)
     }
