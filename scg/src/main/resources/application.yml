@@ -1,0 +1,26 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: auth-service
+        uri: lb://auth-service
+        predicates:
+        - Path=/auth-service/**
+        filters:
+        - RewritePath=/employee/(?<path>.*), /$\{path}
+      - id: ticket-producer
+        uri: lb://ticket-producer
+        predicates:
+        - Path=/ticket-producer/**
+        filters:
+        - RewritePath=/employee/(?<path>.*), /$\{path}
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka/
