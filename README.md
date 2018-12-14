@@ -19,7 +19,21 @@ We have a few different modules, here are those listed and who has worked on wha
     
 ### How to run the application
 
-//hundur
+When you first clone the repo, you need to do a `mvn install` or a `mvn clean package` to 
+get the jar files needed to run the docker-compose. Once you've done this, open up 
+a terminal like git bash or cmd in the root folder, and run `docker-compose up -d`. We've had 
+issues on some computers with this, so if this ends up not working, you can run the modules 
+manually. 
+
+To do this you need to rightclick the `Application.kt` file in each module, and run them. 
+This has to be done in a specific order; first you run the `EurekaApplication.kt` which will
+launch the eureka server. Wait until this is done, then run the rest of the modules. Once
+they've finished, you'll see them on the eureka server on [http://localhost:8761/](http://localhost:8761/).
+
+
+Each module also comes with tests, to run these you go to the module, and down the `test/` path,
+in here you will rightclick and press run, if you want to see the coverage of the programs, press
+`run with coverage`. Coverage is about 90% for each module.
 
 ### Api documentation
 To use swagger, we now have to authenticate using:
@@ -27,11 +41,15 @@ To use swagger, we now have to authenticate using:
 username: admin
 password: admin
 ```
+[Eureka](http://localhost:8761/)
+
 [Swagger link for ticket-service](http://localhost:8081/swagger-ui.html) 
 
 [Swagger link for auth-service](http://localhost:8082/swagger-ui.html) 
 
 [Swagger link for movie-service](http://localhost:8083/swagger-ui.html) 
+
+[Swagger link for user-service](http://localhost:8084/swagger-ui.html) 
 
 
 ### What the project does
