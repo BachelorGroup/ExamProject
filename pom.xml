@@ -23,6 +23,7 @@
 		<module>ticket</module>
 		<module>eureka</module>
 		<module>scg</module>
+		<module>movie</module>
 	</modules>
 
 	<properties>
