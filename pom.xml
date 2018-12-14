@@ -23,7 +23,6 @@
 		<module>user-service</module>
 		<module>user-service-dto</module>
 		<module>ticket</module>
-		<module>movie</module>
 		<module>eureka</module>
 	</modules>
 
