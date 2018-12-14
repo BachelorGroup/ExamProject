@@ -17,7 +17,7 @@ data class MovieDTO(
         @ApiModelProperty("Information, such as actors and locations")
         var info: String? = null,
 
-        @ApiModelProperty("Rating of the movie, out of 100")
+        @ApiModelProperty("Rating of the movie, out of 5 stars")
         var rating: Int? = null,
 
         @ApiModelProperty("The release date of the movie")

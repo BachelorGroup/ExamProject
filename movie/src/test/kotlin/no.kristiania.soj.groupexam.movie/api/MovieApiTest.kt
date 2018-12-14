@@ -3,6 +3,7 @@ package no.kristiania.soj.groupexam.movie.api
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
 import no.kristiania.soj.groupexam.movie.MovieApplication
+import no.kristiania.soj.groupexam.movie.db.MovieEntity
 import no.kristiania.soj.groupexam.movie.dto.MovieDTO
 import org.hamcrest.CoreMatchers
 import org.junit.After
@@ -366,7 +367,7 @@ class MovieApiTest {
 //        val info = "info"
 //        val rating = 4
 //        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
-//
+//        val formatted = releaseDate.format(DateTimeFormatter.ISO_DATE)
 //
 //        val dto = MovieDTO(title, director, description, info, rating, releaseDate)
 //
@@ -378,27 +379,14 @@ class MovieApiTest {
 //                .extract().asString()
 //
 //        val releaseDateNew = LocalDateTime.of(2016, Month.OCTOBER, 20, 10, 10, 0)
-//
+//        val formattedNew = releaseDateNew.format(DateTimeFormatter.ISO_DATE)
 //
 //        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 //                .pathParam("id", id)
-//                .param("releaseDate", releaseDateNew)
+//                .param("releaseDate", formattedNew)
 //                .patch("/{id}/releaseDate")
 //                .then()
 //                .statusCode(204)
-//
-//        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .pathParam("id", id)
-//                .get("/{id}")
-//                .then()
-//                .statusCode(200)
-//                .body("title", CoreMatchers.equalTo(title))
-//                .body("director", CoreMatchers.equalTo(director))
-//                .body("description", CoreMatchers.equalTo(description))
-//                .body("info", CoreMatchers.equalTo(info))
-//                .body("rating", CoreMatchers.equalTo(rating))
-//                .body("releaseDate", CoreMatchers.equalTo("2016-10-20T10:10:00"))
-//                .body("id", CoreMatchers.equalTo(id))
 //    }
 
     @Test
@@ -425,5 +413,165 @@ class MovieApiTest {
                 .delete("/{id}")
                 .then()
                 .statusCode(204)
+    }
+
+    @Test
+    fun testNull() {
+        val dto = MovieDTO(null, null, null, null, null, null)
+
+        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(400)
+                .extract().asString()
+    }
+
+    @Test
+    fun testIllegalDeleteMovie() {
+        val title = "title"
+        val director = "director"
+        val description = "description"
+        val info = "info"
+        val rating = 4
+        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
+
+
+        val dto = MovieDTO(title, director, description, info, rating, releaseDate)
+
+        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().asString()
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id + 1)
+                .delete("/{id}")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
+    fun testDeleteNoMovie() {
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .delete("Invalid")
+                .then()
+                .statusCode(400)
+    }
+
+    @Test
+    fun testIllegalCreateMovie() {
+        val title = "title"
+        val director = "director"
+        val description = "description"
+        val info = "info"
+        val rating = 4
+        val releaseDate = LocalDateTime.of(2018, Month.APRIL, 20, 10, 10, 0)
+
+        val dto = MovieDTO(title, director, description, info, rating, releaseDate)
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("size()", CoreMatchers.equalTo(0))
+
+        val id = RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().asString()
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("size()", CoreMatchers.equalTo(1))
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", id + 1)
+                .get("/{id}")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
+    fun testEmptyMovie() {
+        val dto = MovieDTO()
+        dto.info = null
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(400)
+    }
+
+    @Test
+    fun testIllegalId() {
+        val dto = MovieDTO()
+        dto.id = "1"
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(dto)
+                .post()
+                .then()
+                .statusCode(400)
+    }
+
+    @Test
+    fun testIllegalGet() {
+        val dto = MovieDTO()
+        dto.id = "1"
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", "2")
+                .get("/{id}")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
+    fun testNoId() {
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("size()", CoreMatchers.equalTo(0))
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", "2")
+                .get("/{id}")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
+    fun testIllegalUpdate() {
+        val rating = 4
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", "nothing")
+                .param("rating", rating)
+                .patch("/{id}/rating")
+                .then()
+                .statusCode(400)
+    }
+
+    @Test
+    fun testIllegalDelete() {
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .get()
+                .then()
+                .statusCode(200)
+                .body("size()", CoreMatchers.equalTo(0))
+
+        RestAssured.given().accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .delete("1")
+                .then()
+                .statusCode(404)
     }
 }

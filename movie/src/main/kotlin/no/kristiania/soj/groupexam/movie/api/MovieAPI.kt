@@ -8,6 +8,7 @@ import no.kristiania.soj.groupexam.movie.dto.MovieConverter
 import no.kristiania.soj.groupexam.movie.dto.MovieDTO
 import no.kristiania.soj.groupexam.movie.MovieRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.validation.annotation.Validated
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -238,6 +239,7 @@ class MovieAPI {
     }
 
 //    @ApiOperation("Update the release date")
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 //    @PatchMapping(path = ["/{id}/releaseDate"], consumes = [(org.springframework.http.MediaType.APPLICATION_JSON_VALUE)])
 //    fun updateReleaseDate(@ApiParam("the release date of the movie")
 //                          @PathVariable("id")

@@ -9,9 +9,7 @@ import java.time.LocalDateTime
 import javax.persistence.EntityManager
 
 @Repository
-interface MovieRepository : CrudRepository<MovieEntity, Long>, MovieRepositoryCustom {
-
-}
+interface MovieRepository : CrudRepository<MovieEntity, Long>, MovieRepositoryCustom
 
 @Transactional
 interface MovieRepositoryCustom {
