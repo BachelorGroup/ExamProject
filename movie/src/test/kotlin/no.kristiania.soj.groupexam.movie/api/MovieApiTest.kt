@@ -515,6 +515,25 @@ class MovieApiTest {
     }
 
     @Test
+    fun testChangedId(){
+        val dto = MovieDTO()
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", "1")
+                .body(MovieDTO(
+                        title = dto.title,
+                        director = dto.director,
+                        description = dto.description,
+                        info = dto.info,
+                        rating = dto.rating,
+                        releaseDate = dto.releaseDate,
+                        id = null))
+                .put("/{id}")
+                .then()
+                .statusCode(404)
+    }
+
+    @Test
     fun testNotMatching(){
         val dto = MovieDTO()
 
@@ -574,6 +593,17 @@ class MovieApiTest {
                 .patch("/{id}/title")
                 .then()
                 .statusCode(400)
+    }
+    @Test
+    fun testIllegalUpdateMovie() {
+        val title = "title"
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", "1")
+                .param("title", title)
+                .patch("/{id}/title")
+                .then()
+                .statusCode(404)
     }
 
     @Test
