@@ -510,6 +510,18 @@ class MovieApiTest {
     }
 
     @Test
+    fun testIllegalUpdateNoMovie(){
+        val title = "title"
+
+        RestAssured.given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .pathParam("id", "nothing")
+                .param("title", title)
+                .patch("/{id}/title")
+                .then()
+                .statusCode(400)
+    }
+
+    @Test
     fun testIllegalId() {
         val dto = MovieDTO()
         dto.id = "1"
