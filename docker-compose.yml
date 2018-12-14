@@ -6,6 +6,18 @@ services:
   # that does open a port accessible from outside the
   # Docker network.
 
+  auth-db:
+    image: "postgres:10"
+
+  user-service-db:
+    image: "postgres:10"
+
+  ticket-db:
+    image: "postgres:10"
+
+  movie-db:
+    image: "postgres:10"
+
   scg:
     build:
       context: ./scg
@@ -13,23 +25,53 @@ services:
     ports:
       - "80:8080"
     depends_on:
-        - eureka
+      - eureka
 
   eureka:
     build:
       context: ./eureka
       dockerfile: Dockerfile
 
-  ticket_service:
-     build:
-        context: ./ticket
-        dockerfile: Dockerfile
-     depends_on:
-        - scg
+  ticket_service_0:
+    build:
+      context: ./ticket
+      dockerfile: Dockerfile
+    environment:
+      - TICKET_SERVICE_ID=A
+    depends_on:
+      - scg
+      - ticket-db
 
-  service_1:
-     build:
-        context: ./auth
-        dockerfile: Dockerfile
-     depends_on:
-        - scg
+  ticket_service_1:
+    build:
+      context: ./ticket
+      dockerfile: Dockerfile
+    environment:
+      - TICKET_SERVICE_ID=B
+    depends_on:
+      - scg
+      - ticket-db
+
+  auth_service:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    depends_on:
+      - scg
+      - auth-db
+
+  movie_service:
+    build:
+      context: ./movie
+      dockerfile: Dockerfile
+    depends_on:
+      - scg
+      - movie-db
+
+  user_service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    depends_on:
+      - scg
+      - user-service-db
