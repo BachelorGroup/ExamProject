@@ -9,4 +9,4 @@ eureka:
 
 spring:
   application:
-    name: ticket-producer
+    name: ticket-service
